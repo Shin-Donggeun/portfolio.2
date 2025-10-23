@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shin DongGeun</title>
+    <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-text" rel="stylesheet">
+    <link rel="stylesheet" href="doeat.css">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+</head>
+
+<body>
+
+
+    <nav>
+        <div class="nav-fixed">
+            <a href="index.html" class="back-btn" aria-label="뒤로 가기">
+                <div class="outline">
+                    <div class="BACK">
+                        <img src="img/LEFT_ARROW.PNG" alt="" aria-hidden="true" class="icon-arrow">
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="titlenav">
+            <div class="titleoutline">
+                <div class="titlename">
+                    <p>두잇 (Do Eat) 리디자인</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="detail reveal" style="--reveal-delay: 150ms;">
+        <div class="detailtitle">
+            <div class="detailleft">
+                <p class="detail_title">두잇 리디자인 (배달 어플)</p>
+                <p class="detail_subtitle">신동근</P>
+                <p class="detail_subtitle">작업 기간 : 25일</P>
+            </div>
+            <a href="https://www.figma.com/design/IlhevBDOadIrLI9UG1JYou/%EB%91%90%EC%9E%87-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=hpY87DVXW6NFB5jF-1"
+            target="_blank">
+            <div class="titleboxoutline">
+                <div class="titlebox">
+                    <p class="title"><img src="img/figma_icon.png" class="figmaicon"> 피그마 파일 열기</p>
+
+                </div>
+            </div>
+        </a>
+        </div>
+        <img src="img/doeat_port.png" class="port reveal" style="--reveal-delay: 150ms;">
+        <a href="https://www.figma.com/design/IlhevBDOadIrLI9UG1JYou/%EB%91%90%EC%9E%87-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&t=hpY87DVXW6NFB5jF-1"
+        target="_blank">
+        <div class="titleboxoutline">
+            <div class="titlebox">
+                <p class="title"><img src="img/figma_icon.png" class="figmaicon"> 피그마 파일 열기</p>
+
+            </div>
+        </div>
+    </a>
+    </section>
+
+    <section class="fourth reveal" style="--reveal-delay: 300ms;" id="fourth">
+        <div class="titleboxoutline reveal" style="--reveal-delay: 300ms;">
+            <div class="titlebox reveal" style="--reveal-delay: 300ms;">
+                <p class="title">Contact</p>
+            </div>
+        </div>
+
+        <div class="contactwrap">
+            <p class="contacttext1">소중한 연락을 기다리겠습니다.</p>
+            <div class="contactbox">
+                <p class="contacttext2">Mobile : 010-3796-3480</p>
+                <p class="contacttext2">E-Mail : sdg1021@naver.com</p>
+                <p class="contacttext2">Address : Seoul, South Korea</p>
+            </div>
+
+            <div class="footerbottom">
+                <p class="contactthanks">감사합니다.</p>
+                <p class="contacttext3">Copyright 2025. Shin DongGeun. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function () {
+          const els = document.querySelectorAll('.reveal');
+      
+          // 모션 민감/폴백
+          const prefersReduced = window.matchMedia &&
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (prefersReduced || !('IntersectionObserver' in window)) {
+            els.forEach(el => el.classList.add('is-visible'));
+            return;
+          }
+      
+          // 초기 가시성 즉시 반영(첫 페인트 시점에 이미 보이는 요소 처리)
+          const inView = (el) => {
+            const r = el.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const vw = window.innerWidth  || document.documentElement.clientWidth;
+            return r.bottom > 0 && r.right > 0 && r.top < vh && r.left < vw;
+          };
+          els.forEach(el => { if (inView(el)) el.classList.add('is-visible'); });
+      
+          // 관대한 옵저버(섹션 같은 큰 타깃 포함)
+          const io = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                obs.unobserve(entry.target); // 1회만
+              }
+            });
+          }, {
+            root: null,
+            rootMargin: '0px',   // 관대하게
+            threshold: 0.01      // 1%만 보여도 트리거
+          });
+      
+          els.forEach(el => { if (!el.classList.contains('is-visible')) io.observe(el); });
+      
+          // 폰트/주소창 리플로우 이후도 한 번 더 보정
+          window.addEventListener('load', () => {
+            els.forEach(el => { if (inView(el)) el.classList.add('is-visible'); });
+          });
+        })();
+      </script>
+</body>
+
+</html>
