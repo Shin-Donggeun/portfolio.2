@@ -1,0 +1,696 @@
+:root {
+    --nav-font: 'SF Pro Display', 'SF Pro Text', 'SF Pro', -apple-system, system-ui, 'Segoe UI', Roboto, 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
+html,
+body,
+input,
+button,
+select,
+textarea {
+    font-family: var(--nav-font);
+    font-style: normal;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #111319;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+nav{
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+  }
+
+.outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 10px;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid #f7f7f7;
+    border-radius: 999px;
+    background-color: #111319;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 0;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 872px;
+    background-color: transparent;    
+    border-radius: 999px;
+    gap: clamp(24px, 3.5vw, 80px);     /* 좁은 화면에서 최소 간격을 소폭 축소 */
+    font-weight: 600;
+    font-size: clamp(12px, 0.9vw, 16px); /* 뷰포트에 따른 유동 폰트 크기 */
+    color: #111319;
+    position: relative;           
+    isolation: isolate;       
+  }
+
+  .nav::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;  /* 기본: .nav와 동일 */
+    background-color: #f7f7f7;
+    border-radius: inherit;
+    pointer-events: none;
+    transition: top .2s ease, right .2s ease, bottom .2s ease, left .2s ease;
+  }
+  .outline:hover {
+    border-color: transparent;
+}
+  .outline:hover .nav::before {
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+  }
+
+  
+
+  
+  .nav a:not(.is-active):hover .label,
+  .nav a:not(.is-active):focus-visible .label {
+    opacity: 1;             /* 현재 호버(또는 키보드 포커스)된 항목만 진하게 */
+    color: inherit;
+  }
+  
+  .nav a {
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    position: relative;  /* 텍스트를 ::before 위로 */
+    z-index: 1;
+  }
+  
+  .nav a .label {
+    display: inline-block;
+    transform-origin: center center;  
+    transition: transform .18s ease, opacity .18s ease;
+    opacity: 0.3;
+    font-weight: 500;
+    white-space: nowrap; /* 줄바꿈 방지 */
+  }
+  
+  .nav a.is-active .label {
+    transform: scale(1.18);    
+    opacity: 1;
+    font-weight: 700;
+    color: inherit;
+  }
+
+
+/* 섹션 */
+
+section {
+    width: 100%;
+    max-width: 1800px;
+}
+
+.first {
+    background-color: none;
+    height: 100%;
+    max-height: 1800px;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: clamp(48px, 6vw, 120px);
+    width: min(100%, 1600px);
+    margin: 0 auto;
+    padding: 0 clamp(48px, 6vw, 120px);
+    z-index: 1;
+}
+
+.firstleft{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0PX;
+    flex: 0 1 clamp(520px, 46vw, 780px);
+    max-width: clamp(520px, 46vw, 780px);
+    position: relative;
+    z-index: 1;
+}
+
+.subtitle{
+    color: #f7f7f7;
+    font-size: clamp(14px, 1.05vw, 20px);
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+.maintitle{
+    color: #fff;
+    font-size: clamp(48px, 5.83vw, 112px);
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* 텍스트 중앙정렬 */
+}
+
+#firsttext{
+    margin-top: 10px;
+    text-align: start;
+    display: inherit;
+}
+
+.firstright{
+    height: auto;
+    overflow: visible;
+    margin-left: 0;
+    width: clamp(420px, 34vw, 720px);
+    min-width: 420px;
+    align-self: flex-start; /* 섹션 세로 중앙 정렬 대신 상단 기준 배치 */
+    position: relative;
+    z-index: 0;
+}
+
+/* 소형 화면에서 오버플로우 방지: 뷰포트 기준으로 유연하게 */
+@media (max-width: 480px){
+  .firstright{
+    margin-left: 0;
+    width: 90vw;
+    min-width: 0;
+  }
+}
+
+/* 모든 화면에서 .first 섹션을 콘텐츠에 맞게 조정하여 하단 빈 공간 제거 */
+@media (max-width: 1080px) {
+  .first {
+    height: auto;        /* 고정 높이 제거 */
+    min-height: auto;    /* 최소 높이도 제거하여 콘텐츠에 맞게 */
+  }
+}
+
+/* 873px 이하에서 nav와 겹침 방지를 위한 상단 패딩 */
+@media (max-width: 880px) {
+  .first {
+    margin-top: 80px;   /* nav 높이 + 여백 확보 */
+  }
+}
+
+/* 1080px 이하 ~ 626px 이상: 레이아웃 유지, 내부 간격만 유동 조절 */
+@media (max-width: 1080px) and (min-width: 626px) {
+  .first {
+    gap: clamp(24px, 6vw, 80px); /* 좌우 컬럼 간격 */
+    padding: 0 24px;             /* 좌우 여백 살짝 부여 */
+    align-items: center;         /* 기본 중앙 정렬로 어긋남 방지 */
+  }
+  .firstright {
+    margin-left: clamp(24px, 6vw, 80px); /* 기존 고정 160px → 유동 간격 */
+    width: clamp(184px, 38vw, 600px);    /* 최소 184px로 제한 */
+    min-width: 184px;                    /* 이미지 최소 너비 184px 보장 */
+    align-self: center;                  /* 중앙 정렬로 어긋남 방지 */
+  }
+  .firstleft {
+    gap: 6px; /* 타이틀/부제 사이 미세 간격 확보로 전체 높이 압축 */
+    align-self: center;                  /* 중앙 정렬로 어긋남 방지 */
+  }
+  .profileimg {
+    width: 100%;
+    height: auto;
+    max-height: 800px;                   /* 적절한 최대 높이로 과도한 축소 방지 */
+  }
+}
+
+@media (max-width: 625px){
+  .first{
+    position: relative;
+    overflow: visible; /* 내용물이 튀어나오지 않도록 높이 조절 */
+    min-height: 400px; /* 내용물에 맞는 적절한 최소 높이 */
+    height: auto;       /* 높이를 자동으로 조절 */
+  }
+  .firstleft{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2; /* 텍스트가 위에 */
+  }
+  .firstright{
+    position: absolute;
+    top: 50%;
+    right: -6vw;            /* 약간 오른쪽으로 빼서 자연스러운 배경 위치 */
+    transform: translateY(-50%);
+    width: 70vw;            /* 90vw → 70vw로 축소하여 nav와 겹침 완화 */
+    min-width: 0;           /* 기존 min-width 해제 */
+    margin-left: 0;         /* 좌측 마진 해제 */
+    z-index: 1;             /* 텍스트 아래, 배경처럼 */
+    pointer-events: none;   /* 클릭 막지 않도록 */
+    opacity: 0.18;          /* 배경 느낌 */
+  }
+  .profileimg{
+    width: 100%;
+    height: auto;
+  }
+  .profileimg {
+    height: 336px;          /* 이미지 높이를 336px로 설정 (420px의 80%) */
+    width: auto;            /* 비율 유지를 위해 width를 auto로 */
+    object-fit: cover;     /* 이미지 비율 유지하면서 컨테이너에 맞춤 */
+  }
+}
+
+/* 405px 너비에서 섹션 높이와 이미지 크기 축소 */
+@media (max-width: 405px) {
+  .first {
+    min-height: 280px;      /* 섹션 높이를 더 작게 설정 */
+    height: auto;
+    margin-top: 75px;        /* nav와 겹침 방지를 위한 추가 여백 */
+  }
+  .firstright {
+    position: relative;      
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 80%;             /* 이미지 컨테이너 폭 축소 */
+    margin: 0 auto;         /* 중앙 정렬 */
+    opacity: 0.18;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .profileimg {
+    height: 200px;           /* 이미지 높이를 고정으로 축소 */
+    width: auto;            
+    object-fit: cover;     
+  }
+}
+
+.profileimg{
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 1050px;
+}
+
+
+.second {
+    width: 100%;
+    max-width: 1800px;
+    background-color: #202020;
+    min-height: clamp(720px, 75vh, 1080px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0;
+    border-radius: 60px;
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+    gap: clamp(48px, 6vw, 80px);
+}
+
+@media (max-width: 1180px) {
+  .second {
+    min-height: auto;
+    padding: clamp(32px, 6vw, 60px);
+    justify-content: flex-start;
+  }
+}
+
+
+.skilllist {
+    width: 456px;
+    height: auto; 
+    max-width: 100%; 
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .skilllist {
+    width: min(456px, 80vw); 
+  }
+}
+
+@media (max-width: 480px) {
+  .skilllist {
+    width: min(456px, 70vw); 
+  }
+}
+
+.titlebox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111319;
+    border: 1px solid #f7f7f7;
+    border-radius: 999px;
+    width: fit-content;
+    height: fit-content;
+    padding: clamp(8px, 1.5vw, 14px) clamp(18px, 4vw, 36px);
+}
+
+.titleboxoutline {
+    border-radius: 999px;
+    border: none;
+    width: fit-content;
+    height: fit-content;
+    background-color: #111319;
+    padding: 10px;
+    margin: -10px;
+}
+
+.title {
+    font-size: clamp(18px, 1.8vw, 28px);
+    font-weight: 600;
+    color: #f7f7f7;
+    letter-spacing: clamp(0.04em, 0.1vw, 0.08em);
+    margin: 0;
+}
+
+
+   @media (max-width: 1340px){
+    .titleboxoutline{
+      margin: 0 auto;
+    }
+  }
+
+.project {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(32px, 5vw, 80px);
+    width: 100%;
+    max-width: 1200px;
+    justify-items: center;
+    justify-content: center;
+}
+
+.project img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.project > a {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: min(100%, clamp(260px, 38vw, 560px));
+    border-radius: 30px;
+    outline: 2px solid transparent;
+    outline-offset: 10px;
+    transition: outline-color .22s ease;
+}
+
+.project > a:hover,
+.project > a:focus-visible {
+    outline-color: #f7f7f7;
+}
+@media (max-width: 1200px) {
+  .project {
+    gap: clamp(24px, 6vw, 56px);
+  }
+  .project > a {
+    width: min(100%, clamp(220px, 44vw, 420px));
+  }
+}
+
+@media (max-width: 700px) {
+  .project {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .project > a {
+    width: min(100%, 420px);
+  }
+  .second {
+    padding: 22px;
+    gap: clamp(20px, 7vw, 36px);
+  }
+  .fourth {
+    min-height: auto;
+    padding: clamp(20px, 7vw, 40px);
+  }
+  .contactwrap {
+    width: 100%;
+    margin-top: clamp(20px, 7vw, 40px);
+  }
+  .contactbox {
+    margin-top: clamp(12px, 6vw, 24px);
+  }
+  .footerbottom {
+    margin-top: clamp(16px, 6vw, 32px);
+  }
+}
+
+.third {
+    width: 100%;
+    max-width: 1800px;
+    background-color: #202020;
+    min-height: 1080px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: clamp(32px, 6vw, 72px);
+    margin: 60px 0;
+    border-radius: 60px;
+    padding: 60px;
+}
+
+.worklist {
+    width: 100%;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vw, 48px);
+}
+
+.worklist > div {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.worklist > div:not(.videos) {
+    overflow: hidden;
+}
+ㅇ
+.worklist > .videos {
+    display: block;
+    width: 100%;
+    overflow: visible;
+}
+
+.worklist > div:not(.videos) > div {
+    display: inline-flex;
+    gap: clamp(16px, 2.5vw, 36px);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: max-content;
+    min-width: 100%;
+    --lane-duration: 8s;
+    --lane-shift: -100%;
+    animation: worklane-scroll var(--lane-duration) linear infinite;
+}
+
+.worklist img{
+    height: clamp(140px, 12vw, 180px);
+    width: auto;
+    transition: height .25s ease;
+}
+
+.worklist > div:not(.videos):hover img{
+    height: clamp(180px, 18vw, 270px);
+}
+
+.third1 > div { --lane-duration: 16s; }
+.third2 > div { --lane-duration: 26s; }
+.third3 > div { --lane-duration: 84.5s; }
+.third4 > div { --lane-duration: 100s; }
+.videos > div {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    gap: clamp(16px, 2.5vw, 28px);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    justify-items: center;
+}
+
+.videos video {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    max-height: 200px;
+    display: block;
+    border-radius: 12px;
+    background-color: #000;
+}
+
+@media (max-width: 1200px) {
+  .videos > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .videos > div {
+    grid-template-columns: 1fr;
+    gap: clamp(12px, 5vw, 24px);
+  }
+}
+
+@keyframes worklane-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(var(--lane-shift));
+    }
+}
+
+.fourth {
+    border-radius: 60px 60px 0 0;
+    margin-bottom: 0;
+    min-height: auto;
+    height: auto;
+    background-color: #202020;
+    width: 100%;
+    max-width: 1800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 상단 정렬 유지 */
+    padding: clamp(24px, 6vw, 56px) clamp(24px, 6vw, 56px) clamp(12px, 4vw, 28px); /* 하단 여백 축소 */
+    position: relative;
+    gap: 0;
+}
+
+.contacttext1{
+    color: #f7f7f7;
+    font-size: clamp(18px, 2.4vw, 24px);
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+}
+.contactwrap{
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: clamp(24px, 6vw, 56px);
+}
+
+ .contactbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 20px 0;
+    padding: 0;
+    gap: clamp(8px, 2.8vw, 8px);
+}
+
+.contacttext2{
+    color: #f7f7f7; 
+    font-size: clamp(14px, 2.2vw, 24px);
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+.contacttext3{
+    color: rgba(247, 247, 247, 0.3);
+    font-size: 14px;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+    padding: 0;
+    margin-top: auto;  
+}
+
+.footerbottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(6px, 2.4vw, 12px);
+    margin-top: clamp(16px, 4vw, 48px);
+    margin-bottom: 0;
+}
+
+.contactthanks{
+    color: #f7f7f7;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity .60s cubic-bezier(.22,.61,.36,1),
+      transform .60s cubic-bezier(.22,.61,.36,1);
+    will-change: opacity, transform;
+    transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+
+@media (max-width: 1080px) {
+  html, body {
+    overflow-x: hidden;
+  }
+  .second,
+  .third,
+  .fourth {
+    width: min(92vw, 960px); 
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .second,
+  .third {
+    border-radius: 20px;
+  }
+  .fourth {
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+/* 모바일에서 콘텐츠 섹션 패딩 축소 */
+@media (max-width: 768px) {
+  .third,
+  .fourth {
+    padding: 12px; /* 모바일에서 패딩을 12px로 축소 */
+  }
+}
