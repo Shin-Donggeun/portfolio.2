@@ -429,6 +429,21 @@ nav>.titlenav {
     margin-top: auto;  
 }
 
+.portfolio-disclaimer {
+    color: rgba(247, 247, 247, 0.18);
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0 0 6px 0;
+    padding: 0;
+    line-height: 1.4;
+    text-align: center;
+    max-width: clamp(260px, 90%, 520px);
+    margin-left: auto;
+    margin-right: auto;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
 .footerbottom{
     display: flex;
     flex-direction: column;
@@ -473,7 +488,7 @@ nav>.titlenav {
 
 
 
-/* === Reveal on scroll === */
+
 .reveal {
     opacity: 0;
     transform: translateY(24px);

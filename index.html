@@ -188,11 +188,12 @@
           <p class="contacttext2">Address : Seoul, South Korea</p>
         </div>
 
-        <div class="footerbottom">
-          <p class="contactthanks">감사합니다.</p>
-          <p class="contacttext3">Copyright 2025. Shin DongGeun. All rights reserved.</p>
-        </div>
+      <div class="footerbottom">
+        <p class="contactthanks">감사합니다.</p>
+        <p class="contacttext3">Copyright 2025. Shin DongGeun. All rights reserved.</p>
+        <p class="portfolio-disclaimer">본 포트폴리오에 포함된 모든 브랜드 및 기업 관련 프로젝트는 실제 업체와 무관한 개인 학습 및 포트폴리오 제작을 위한 가상의 작업물입니다.</p>
       </div>
+    </div>
 
 
 
@@ -268,7 +269,7 @@
     window.addEventListener("resize", setActiveNav);
     window.addEventListener("load", setActiveNav);
 
-  // Reveal 초기화: 로드 후 옵저버 설정 + 초기 뷰포트 내 요소 즉시 노출
+
   let revealSetupDone = false;
   function initReveal() {
     if (revealSetupDone) return;
@@ -291,7 +292,7 @@
       }
     };
 
-    // 초기 뷰포트 안에 들어온 요소는 즉시 보이도록 처리
+
     els.forEach(markVisibleIfInView);
 
     const io = new IntersectionObserver((entries, obs) => {
@@ -311,7 +312,7 @@
       if (!el.classList.contains('is-visible')) io.observe(el);
     });
 
-    // 이미지/폰트 로딩 후 레이아웃이 바뀌면 한 번 더 체크
+
     window.addEventListener('load', () => {
       els.forEach(markVisibleIfInView);
     });

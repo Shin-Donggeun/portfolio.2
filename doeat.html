@@ -84,24 +84,23 @@
             <div class="footerbottom">
                 <p class="contactthanks">감사합니다.</p>
                 <p class="contacttext3">Copyright 2025. Shin DongGeun. All rights reserved.</p>
+                <p class="portfolio-disclaimer">본 포트폴리오에 포함된 모든 브랜드 및 기업 관련 프로젝트는 실제 업체와 무관한 개인 학습 및 포트폴리오 제작을 위한 가상의 작업물입니다.</p>
             </div>
-        </div>
+          </div>
     </section>
 
     <script>
         (function () {
           const els = document.querySelectorAll('.reveal');
       
-          // 모션 민감/폴백
+
           const prefersReduced = window.matchMedia &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           if (prefersReduced || !('IntersectionObserver' in window)) {
             els.forEach(el => el.classList.add('is-visible'));
             return;
           }
-      
-          // 초기 가시성 즉시 반영(첫 페인트 시점에 이미 보이는 요소 처리)
-          const inView = (el) => {
+        const inView = (el) => {
             const r = el.getBoundingClientRect();
             const vh = window.innerHeight || document.documentElement.clientHeight;
             const vw = window.innerWidth  || document.documentElement.clientWidth;
@@ -109,23 +108,23 @@
           };
           els.forEach(el => { if (inView(el)) el.classList.add('is-visible'); });
       
-          // 관대한 옵저버(섹션 같은 큰 타깃 포함)
+
           const io = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
               if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                obs.unobserve(entry.target); // 1회만
+                obs.unobserve(entry.target); 
               }
             });
           }, {
             root: null,
-            rootMargin: '0px',   // 관대하게
-            threshold: 0.01      // 1%만 보여도 트리거
+            rootMargin: '0px',   
+            threshold: 0.01  
           });
       
           els.forEach(el => { if (!el.classList.contains('is-visible')) io.observe(el); });
       
-          // 폰트/주소창 리플로우 이후도 한 번 더 보정
+ 
           window.addEventListener('load', () => {
             els.forEach(el => { if (inView(el)) el.classList.add('is-visible'); });
           });
