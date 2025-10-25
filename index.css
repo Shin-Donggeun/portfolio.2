@@ -90,15 +90,27 @@ nav{
     pointer-events: none;
     transition: top .2s ease, right .2s ease, bottom .2s ease, left .2s ease;
   }
+@media (hover: hover) {
   .outline:hover {
     border-color: transparent;
-}
+  }
   .outline:hover .nav::before {
     top: -10px;
     right: -10px;
     bottom: -10px;
     left: -10px;
   }
+}
+
+.outline.is-touch-active {
+  border-color: transparent;
+}
+.outline.is-touch-active .nav::before {
+  top: -10px;
+  right: -10px;
+  bottom: -10px;
+  left: -10px;
+}
 
   
 

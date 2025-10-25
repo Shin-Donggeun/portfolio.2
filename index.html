@@ -227,7 +227,7 @@
   
       requestAnimationFrame(step);
     }
-  
+
     document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -239,8 +239,43 @@
         }
       });
     });
-  
 
+    (function setupNavTouchHover() {
+      const outline = document.querySelector('nav .outline');
+      if (!outline) return;
+
+      const links = outline.querySelectorAll('a');
+      let clearTimer = null;
+      const scheduleClear = (delay = 220) => {
+        clearTimeout(clearTimer);
+        clearTimer = setTimeout(() => outline.classList.remove('is-touch-active'), delay);
+      };
+
+      links.forEach(link => {
+        link.addEventListener('pointerdown', (evt) => {
+          if (evt.pointerType === 'mouse') return;
+          outline.classList.add('is-touch-active');
+          scheduleClear(400);
+        }, { passive: true });
+
+        ['pointerup', 'pointercancel', 'pointerleave'].forEach(type => {
+          link.addEventListener(type, (evt) => {
+            if (evt.pointerType === 'mouse') return;
+            scheduleClear();
+          }, { passive: true });
+        });
+      });
+
+      document.addEventListener('pointerdown', (evt) => {
+        if (evt.pointerType === 'mouse') return;
+        if (!outline.contains(evt.target)) {
+          outline.classList.remove('is-touch-active');
+          clearTimeout(clearTimer);
+        }
+      }, { passive: true });
+    })();
+
+  
     function setActiveNav() {
       const sections = document.querySelectorAll("section");
       const navLinks = document.querySelectorAll("nav a");

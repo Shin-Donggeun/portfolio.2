@@ -114,13 +114,6 @@ nav {
     object-fit: contain;
 }
 
-.nav-fixed .outline:hover .nav::before {
-    top: -10px;
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
-}
-
 .nav-fixed .back-btn {
     position: relative;
     z-index: 1;
@@ -136,11 +129,6 @@ nav {
     line-height: 1;
 }
 
-.nav-fixed .outline:hover {
-    border-color: transparent;
-}
-
-
 .nav-fixed .BACK::before {
     content: "";
     position: absolute;
@@ -154,6 +142,23 @@ nav {
     z-index: 0;
 }
 
+.nav-fixed .back-btn .icon-arrow {
+    position: relative;
+    z-index: 1;
+}
+
+.nav-fixed .outline:hover {
+    border-color: transparent;
+}
+
+
+.nav-fixed .outline:hover .nav::before {
+    top: -10px;
+    right: -10px;
+    bottom: -10px;
+    left: -10px;
+}
+
 .nav-fixed .outline:hover .BACK::before {
     transform: scale(1);
 }
@@ -163,11 +168,6 @@ nav {
     right: -10px;
     bottom: -10px;
     left: -10px;
-}
-
-.nav-fixed .back-btn .icon-arrow {
-    position: relative;
-    z-index: 1;
 }
 
 .titleoutline {
