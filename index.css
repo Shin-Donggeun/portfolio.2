@@ -22,11 +22,17 @@ textarea {
 
 body {
     background-color: #111319;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
+.page-shell {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0;
-    padding: 0;
+    min-height: 100%;
 }
 
 a:visited {
@@ -438,7 +444,7 @@ section {
 }
 
 @media (max-width: 700px) {
-  body {
+  .page-shell {
     display: block;
   }
   .project {
@@ -499,7 +505,7 @@ section {
 .worklist > div:not(.videos) {
     overflow: hidden;
 }
-ㅇ
+
 .worklist > .videos {
     display: block;
     width: 100%;
