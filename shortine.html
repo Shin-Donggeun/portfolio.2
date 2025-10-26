@@ -89,6 +89,20 @@
     </section>
 
     <script>
+        (function ensureInitialScrollRoom() {
+          const doc = document.scrollingElement || document.documentElement;
+          if (!doc) return;
+          if (doc.scrollHeight > window.innerHeight + 1) return;
+
+          const filler = document.createElement('div');
+          filler.setAttribute('data-scroll-nudge', '');
+          filler.style.cssText = 'height:1px;width:1px;pointer-events:none;opacity:0;';
+          document.body.appendChild(filler);
+
+          window.addEventListener('load', () => {
+            filler.remove();
+          }, { once: true });
+        })();
         (function () {
           const els = document.querySelectorAll('.reveal');
       

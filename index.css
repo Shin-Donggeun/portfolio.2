@@ -435,6 +435,7 @@ section {
     display: block;
     overflow: hidden;
     width: min(100%, clamp(260px, 38vw, 560px));
+    min-height: clamp(160px, 26vw, 320px);
     border-radius: 30px;
     outline: 2px solid transparent;
     outline-offset: 10px;
@@ -508,6 +509,7 @@ section {
     display: flex;
     width: 100%;
     justify-content: flex-start;
+    min-height: clamp(140px, 12vw, 180px);
 }
 
 .worklist > div:not(.videos) {
@@ -551,6 +553,7 @@ section {
     width: 100%;
     min-width: 0;
     gap: clamp(16px, 2.5vw, 28px);
+    min-height: clamp(180px, 24vw, 260px);
     grid-template-columns: repeat(4, minmax(0, 1fr));
     justify-items: center;
 }
