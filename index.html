@@ -208,11 +208,17 @@
 
       const filler = document.createElement('div');
       filler.setAttribute('data-scroll-nudge', '');
-      filler.style.cssText = 'height:1px;width:1px;pointer-events:none;opacity:0;';
+      filler.style.cssText = 'height:120px;width:1px;pointer-events:none;opacity:0;';
       document.body.appendChild(filler);
+
+      const resetScroll = () => {
+        requestAnimationFrame(() => window.scrollTo(0, 0));
+      };
+      resetScroll();
 
       window.addEventListener('load', () => {
         filler.remove();
+        resetScroll();
       }, { once: true });
     })();
 
@@ -248,7 +254,9 @@
         const targetId = this.getAttribute('href');
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-          const targetOffsetTop = targetElement.offsetTop;
+          const targetOffsetTop = targetId === '#first'
+            ? 0
+            : targetElement.offsetTop;
           smoothScrollTo(targetOffsetTop, 450);
         }
       });
