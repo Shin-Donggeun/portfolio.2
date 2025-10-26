@@ -580,6 +580,21 @@ section {
     grid-template-columns: 1fr;
     gap: clamp(12px, 5vw, 24px);
   }
+  .worklist > div:not(.videos) > div {
+    --lane-duration: 10.4s;
+  }
+  .third1 > div {
+    --lane-duration: 20.8s;
+  }
+  .third2 > div {
+    --lane-duration: 33.8s;
+  }
+  .third3 > div {
+    --lane-duration: 109.9s;
+  }
+  .third4 > div {
+    --lane-duration: 130s;
+  }
 }
 
 @keyframes worklane-scroll {
