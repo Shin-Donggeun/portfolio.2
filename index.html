@@ -217,7 +217,9 @@
       document.body.appendChild(filler);
 
       const resetScroll = () => {
-        requestAnimationFrame(() => window.scrollTo(0, 0));
+        if (window.scrollY <= 1) {
+          requestAnimationFrame(() => window.scrollTo(0, 0));
+        }
       };
       resetScroll();
 
