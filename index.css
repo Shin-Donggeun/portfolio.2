@@ -332,10 +332,9 @@ section {
 
 
 .second {
-    width: 100%;
-    max-width: 1800px;
+    width: min(92vw, 1800px);
     background-color: #202020;
-    min-height: clamp(720px, 75vh, 1080px);
+    min-height: clamp(720px, 100vh, 1080px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -426,7 +425,8 @@ section {
 
 .project img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
@@ -440,6 +440,22 @@ section {
     outline: 2px solid transparent;
     outline-offset: 10px;
     transition: outline-color .22s ease;
+    aspect-ratio: 12 / 7;
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  .project > a {
+    position: relative;
+  }
+  .project > a::before {
+    content: "";
+    display: block;
+    padding-top: 58.333%;
+  }
+  .project > a > img {
+    position: absolute;
+    inset: 0;
+  }
 }
 
 .project > a:hover,
@@ -483,8 +499,7 @@ section {
 }
 
 .third {
-    width: 100%;
-    max-width: 1800px;
+    width: min(92vw, 1800px);
     background-color: #202020;
     min-height: 1080px;
     display: flex;
@@ -611,11 +626,10 @@ section {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
-    min-height: auto;
+    min-height: clamp(480px, 88vh, 720px);
     height: auto;
     background-color: #202020;
-    width: 100%;
-    max-width: 1800px;
+    width: min(92vw, 1800px);
     display: flex;
     flex-direction: column;
     align-items: center;

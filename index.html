@@ -213,7 +213,8 @@
 
       const filler = document.createElement('div');
       filler.setAttribute('data-scroll-nudge', '');
-      filler.style.cssText = 'height:120px;width:1px;pointer-events:none;opacity:0;';
+      const fillerHeight = Math.max(window.innerHeight, 480);
+      filler.style.cssText = `height:${fillerHeight}px;width:1px;pointer-events:none;opacity:0;`;
       document.body.appendChild(filler);
 
       const resetScroll = () => {
