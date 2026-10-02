@@ -414,9 +414,10 @@ section {
   }
 
 .project {
+    --project-gap: clamp(32px, 5vw, 80px);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(32px, 5vw, 80px);
+    gap: var(--project-gap);
     width: 100%;
     max-width: 1200px;
     justify-items: center;
@@ -462,9 +463,14 @@ section {
 .project > a:focus-visible {
     outline-color: #f7f7f7;
 }
+
+.project5_link {
+    grid-column: 1 / -1;
+    max-width: calc((100% - var(--project-gap)) / 2);
+}
 @media (max-width: 1200px) {
   .project {
-    gap: clamp(24px, 6vw, 56px);
+    --project-gap: clamp(24px, 6vw, 56px);
   }
   .project > a {
     width: min(100%, clamp(220px, 44vw, 420px));
@@ -477,6 +483,9 @@ section {
   }
   .project > a {
     width: min(100%, 420px);
+  }
+  .project5_link {
+    max-width: none;
   }
   .second {
     padding: 22px;
