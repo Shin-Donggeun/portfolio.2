@@ -1,0 +1,71 @@
+/* The sparkle: a four-pointed star, with a small one close at its lower
+   right, that keeps the mouse company (scripts/sparkle.js makes and moves
+   it). It never takes a click. Layers, outside in: the position (moved by
+   the script), the hover scale, then the stars (their twinkle, and the
+   white shine a press sends across them). The box is 28px: the drawing's
+   units are pixels. */
+
+.sparkle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 28px;
+  height: 28px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  will-change: transform;
+}
+
+/* Shown once the mouse has moved over the page; gone while it is outside. */
+.sparkle.shown {
+  opacity: .85;
+}
+
+.sparkleScale,
+.sparkleStar {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sparkleScale {
+  transition: transform .2s ease;
+}
+
+/* Over a link, a button or a project card. */
+.sparkle.over .sparkleScale {
+  transform: scale(1.25);
+}
+
+.sparkleStar {
+  overflow: visible;
+}
+
+/* Each star turns on its own centre. */
+.sparklePart {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.sparkleStar stop:first-child {
+  stop-color: var(--glow-blue);
+}
+
+.sparkleStar stop:last-child {
+  stop-color: var(--glow-violet);
+}
+
+/* Touch screens, reduced motion and print: no sparkle at all. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .sparkle {
+    display: none;
+  }
+}
+
+@media print {
+  .sparkle {
+    display: none;
+  }
+}

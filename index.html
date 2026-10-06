@@ -5,200 +5,457 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shin DongGeun</title>
-  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin>
-  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-  <link rel="stylesheet" href="common.css">
-  <link rel="stylesheet" href="index.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/chat.css">
+  <link rel="stylesheet" href="styles/sparkle.css">
+  <!-- With JavaScript the conversation plays in turn by turn; without it everything is simply shown.
+       If the script below never starts, show everything rather than leave answers hidden. -->
+  <script>
+    document.documentElement.classList.add('js');
+    setTimeout(function () { if (!window.chatReady) document.documentElement.classList.remove('js'); }, 3000);
+  </script>
+  <script type="module" src="scripts/chat.js"></script>
+  <script type="module" src="scripts/sparkle.js"></script>
 </head>
 
 <body>
+  <!-- Icons (Lucide, ISC license) -->
+  <svg class="iconSprite" aria-hidden="true">
+    <symbol id="iconMenu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></symbol>
+    <symbol id="iconClose" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" /></symbol>
+    <symbol id="iconSend" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7M12 19V5" /></symbol>
+    <symbol id="iconOpen" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+    <symbol id="iconFold" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6" /></symbol>
+    <symbol id="iconLink" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7" /></symbol>
+    <symbol id="iconPhone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384" /></symbol>
+    <symbol id="iconMail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /><rect x="2" y="4" width="20" height="16" rx="2" /></symbol>
+    <symbol id="iconPin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></symbol>
+  </svg>
 
-  <nav>
-    <div class="outline">
-      <div class="nav">
-        <a href="#first" class="nav1"><span class="label">신동근</span></a>
-        <a href="#second" class="nav2"><span class="label">Projects</span></a>
-        <a href="#third" class="nav3"><span class="label">Works</span></a>
-        <a href="#fourth" class="nav4"><span class="label">Contact</span></a>
-      </div>
-    </div>
-  </nav>
+  <a class="skipLink" href="#intro">대화로 건너뛰기<!-- TODO: copy --></a>
 
-  <section class="first reveal" id="first">
-    <div class="firstleft">
-      <p class="subtitle">Never Stop Growing.</p>
-      <p class="maintitle">Shin DongGeun</p>
-      <p class="subtitle" id="firsttext">항상 멈추지 않고 배우는 사람,<br> 신동근의 성장 기록입니다.</p>
-      <div class="secondtitle">
-        <img src="img/listimg.png" class="skilllist" alt="사용 툴">
-      </div>
-    </div>
+  <!-- Phones: a top bar with the button that opens the conversation list -->
+  <header class="topBar">
+    <button class="iconButton" type="button" id="menuButton" aria-controls="sidebar" aria-expanded="false">
+      <svg class="icon"><use href="#iconMenu" /></svg>
+      <span class="srOnly">대화 목록 열기<!-- TODO: copy --></span>
+    </button>
+    <a class="topName" href="#top">신동근</a>
+  </header>
 
-    <div class="firstright">
-      <img src="img/profile_subject.png" class="profileimg" alt="신동근 프로필 사진">
-    </div>
-  </section>
+  <div class="scrim" id="scrim" hidden></div>
 
-  <section class="second" id="second">
+  <!-- Conversation list = site navigation -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebarHead">
+      <a class="sidebarName" href="#top">신동근 <span>Shin DongGeun</span></a>
+      <button class="iconButton closeButton" type="button" id="closeButton">
+        <svg class="icon"><use href="#iconClose" /></svg>
+        <span class="srOnly">대화 목록 닫기<!-- TODO: copy --></span>
+      </button>
+    </div>
+    <nav aria-label="대화 목록">
+      <ul class="chatList">
+        <li><a class="chatLink" href="#intro">자기소개</a></li>
+        <li><a class="chatLink" href="#learning">러닝머신이요?</a></li>
+        <li><a class="chatLink" href="#skills">스킬</a></li>
+        <li>
+          <a class="chatLink" href="#work">작업물</a>
+          <ul class="subList">
+            <li><a class="chatLink sub" href="#prodaoApp">PRODAO 앱</a></li>
+            <li><a class="chatLink sub" href="#prodaoWeb">PRODAO 웹</a></li>
+            <li><a class="chatLink sub" href="#forit">포잇(For IT)</a></li>
+            <li><a class="chatLink sub" href="#shortine">쇼틴(Shortine)</a></li>
+            <li><a class="chatLink sub" href="#doeat">두잇(DoEat)</a></li>
+            <li><a class="chatLink sub" href="#made">뉴발란스 MADE</a></li>
+            <li><a class="chatLink sub" href="#graphics">Graphics</a></li>
+          </ul>
+        </li>
+        <li><a class="chatLink" href="#contact">연락처</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-    <div class="titleboxoutline reveal">
-      <div class="titlebox">
-        <p class="title">Projects</p>
-      </div>
-    </div>
-    <div class="project reveal">
-      <a class="project5_link" href="forit.html"><img src="img/foritbanner.png" class="project5"
-          alt="포잇(For IT) 어플 디자인" loading="lazy" decoding="async"></a>
-      <a class="project1_link" href="forit.html"><img src="img/foritbanner.png" class="project1"
-          alt="포잇(For IT) 어플 디자인" loading="lazy" decoding="async"></a>
-      <a class="project2_link" href="shortine.html"><img src="img/shortine_thumb.png" class="project2"
-          alt="쇼틴(Shortine) 어플 기획, 디자인" loading="lazy" decoding="async"></a>
-      <a class="project3_link" href="doeat.html"><img src="img/doeatbanner.png" class="project3"
-          alt="두잇(DoEat) 배달 어플 리디자인" loading="lazy" decoding="async"></a>
-      <a class="project4_link" href="made.html"><img src="img/madebanner.png" class="project4"
-          alt="뉴발란스 MADE 라인 리디자인" loading="lazy" decoding="async"></a>
-    </div>
-  </section>
+  <main class="chat" id="top">
 
-  <section class="third reveal" id="third">
-    <div class="titleboxoutline reveal">
-      <div class="titlebox reveal">
-        <p class="title">Works</p>
-      </div>
-    </div>
-    <div class="worklist reveal">
-      <div class="third1">
-        <div>
-          <img src="img/socar_1.png" alt="Socar artwork 1" loading="lazy" decoding="async">
-          <img src="img/socar_2.png" alt="Socar artwork 2" loading="lazy" decoding="async">
-          <img src="img/socar_3.png" alt="Socar artwork 3" loading="lazy" decoding="async">
-          <img src="img/socar_4.png" alt="Socar artwork 4" loading="lazy" decoding="async">
-          <img src="img/socar_5.png" alt="Socar artwork 5" loading="lazy" decoding="async">
-          <img src="img/socar_6.png" alt="Socar artwork 6" loading="lazy" decoding="async">
-          <img src="img/socar_1.png" alt="Socar artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/socar_2.png" alt="Socar artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/socar_3.png" alt="Socar artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/socar_4.png" alt="Socar artwork 4 duplicate" loading="lazy" decoding="async">
-          <img src="img/socar_5.png" alt="Socar artwork 5 duplicate" loading="lazy" decoding="async">
-          <img src="img/socar_6.png" alt="Socar artwork 6 duplicate" loading="lazy" decoding="async">
+    <!-- 1. Empty chat: an input-like box (not a real input) where a line types
+         itself in once, on landing; its gradient border keeps turning. Its
+         send button goes on to the first turn. -->
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="heroInner">
+        <h1 class="heroTitle" id="heroTitle">Learning 머신, 디자이너 <span class="glowText">신동근</span>입니다.</h1>
+        <p class="srOnly">좋아하는 일을 하며 배운, 저의 성장기록입니다.</p>
+        <div class="composer heroComposer glow" id="heroComposer">
+          <p class="composerText" aria-hidden="true"><span id="heroText">좋아하는 일을 하며 배운, 저의 성장기록입니다.</span><span class="caret"></span></p>
+          <div class="composerFoot">
+            <span class="modelLabel" aria-hidden="true">Shin DongGeun</span>
+            <a class="sendButton" href="#intro">
+              <svg class="icon"><use href="#iconSend" /></svg>
+              <span class="srOnly">자기소개 보기<!-- TODO: copy --></span>
+            </a>
+          </div>
         </div>
       </div>
-      <div class="third2">
+    </section>
+
+    <!-- 2. 자기소개 -->
+    <section class="turn" id="intro" aria-labelledby="introQuestion">
+      <h2 class="question" id="introQuestion"><span class="bubble">자기소개 부탁해요</span></h2>
+      <div class="typingRow" aria-hidden="true"><div class="typing glow"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+      <div class="answer">
+        <!-- TODO: copy — 자기소개 문단. 아래는 기존 사이트 문구를 그대로 가져온 것 -->
+        <p>낯선 서비스의 지도를 그리는 UI/UX 디자이너</p>
+        <p>항상 멈추지 않고 배우는 사람,<br> 신동근의 성장 기록입니다.</p>
+        <ul class="facts">
+          <li>아이씨엔캐스트 · UI/UX 디자이너 · 2025.11 – 2026.07</li>
+          <li>담당 서비스 PRODAO — 앱 · 공식 홈페이지 · 기술 문서</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. 러닝머신이요? -->
+    <section class="turn" id="learning" aria-labelledby="learningQuestion">
+      <h2 class="question" id="learningQuestion"><span class="bubble">러닝머신이요?</span></h2>
+      <div class="typingRow" aria-hidden="true"><div class="typing glow"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+      <div class="answer">
+        <p>네, 두 가지 뜻이 있어요.</p>
+        <ul class="meanings">
+          <li class="meaning">
+            <h3><span class="meaningWord">Running</span> <span class="meaningTitle">멈추지 않는다</span></h3>
+            <p class="meaningBody">디자이너 한 명으로, 앱부터 홈페이지와 기술 문서까지 한 서비스를 끝까지 맡았습니다.</p>
+            <p class="meaningMotto"><span class="meaningTag" aria-hidden="true">SPEED +1</span>오늘도 속도를 한 칸 올립니다.</p>
+          </li>
+          <li class="meaning">
+            <h3><span class="meaningWord">Learning</span> <span class="meaningTitle">배운다</span></h3>
+            <p class="meaningBody">처음 접한 블록체인 구조를 익혀 UX로 풀었고, AI를 활용해 사이트를 직접 만들었습니다.</p>
+            <p class="meaningMotto"><span class="meaningTag" aria-hidden="true">DATA +1</span>모든 순간이 학습 데이터입니다.</p>
+          </li>
+        </ul>
+        <p class="meaningsNote"><span class="noteSentence">거꾸로 읽으면 <strong class="swapWord glowText"><span class="swapHalf">머신</span><span class="swapHalf">러닝</span></strong>.</span> <span class="noteSentence">배울수록 나아지는 AI처럼 일합니다.</span></p>
+      </div>
+    </section>
+
+    <!-- 4. 스킬 -->
+    <section class="turn" id="skills" aria-labelledby="skillsQuestion">
+      <h2 class="question" id="skillsQuestion"><span class="bubble">어떤 툴이나 기술을 다룰 수 있어요?</span></h2>
+      <div class="typingRow" aria-hidden="true"><div class="typing glow"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+      <div class="answer">
+        <p>주로 이렇게 다뤄요.</p>
+        <!-- Tool logos in their own colours: the Adobe app icons as adobe.com publishes
+             them (2025), Figma, HTML5 and CSS3 from their published artwork. Tools
+             without a logo: simple shapes in the site's gradient. -->
+        <svg class="skillDefs" width="0" height="0" aria-hidden="true" focusable="false">
+          <linearGradient id="skillGlow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" />
+            <stop offset="1" />
+          </linearGradient>
+        </svg>
         <div>
-          <img src="img/nb_1.png" alt="New Balance artwork 1" loading="lazy" decoding="async">
-          <img src="img/nb_2.png" alt="New Balance artwork 2" loading="lazy" decoding="async">
-          <img src="img/nb_3.png" alt="New Balance artwork 3" loading="lazy" decoding="async">
-          <img src="img/nb_4.png" alt="New Balance artwork 4" loading="lazy" decoding="async">
-          <img src="img/nb_5.png" alt="New Balance artwork 5" loading="lazy" decoding="async">
-          <img src="img/nb_6.png" alt="New Balance artwork 6" loading="lazy" decoding="async">
-          <img src="img/nb_7.png" alt="New Balance artwork 7" loading="lazy" decoding="async">
-          <img src="img/nb_8.png" alt="New Balance artwork 8" loading="lazy" decoding="async">
-          <img src="img/nb_9.png" alt="New Balance artwork 9" loading="lazy" decoding="async">
-          <img src="img/nb_10.png" alt="New Balance artwork 10" loading="lazy" decoding="async">
-          <img src="img/nb_1.png" alt="New Balance artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_2.png" alt="New Balance artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_3.png" alt="New Balance artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_4.png" alt="New Balance artwork 4 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_5.png" alt="New Balance artwork 5 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_6.png" alt="New Balance artwork 6 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_7.png" alt="New Balance artwork 7 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_8.png" alt="New Balance artwork 8 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_9.png" alt="New Balance artwork 9 duplicate" loading="lazy" decoding="async">
-          <img src="img/nb_10.png" alt="New Balance artwork 10 duplicate" loading="lazy" decoding="async">
+          <p class="skillLabel" id="skillDesign">디자인</p>
+          <ul class="chips" aria-labelledby="skillDesign">
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg viewBox="0 0 38 57"><path fill="#1ABCFE" d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" /><path fill="#0ACF83" d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" /><path fill="#FF7262" d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19z" /><path fill="#F24E1E" d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" /><path fill="#A259FF" d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" /></svg></span>Figma
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="toolSquare" viewBox="0 0 240 240"><path fill="#001E36" d="M196.959 0H43.0414C19.2703 0 0 19.2703 0 43.0414V196.959C0 220.73 19.2703 240 43.0414 240H196.959C220.73 240 240 220.73 240 196.959V43.0414C240 19.2703 220.73 0 196.959 0Z" /><path fill="#31A8FF" d="M83.806 63.7059C115.18 63.7059 132.848 78.4019 132.848 103.005C132.848 131.737 108.905 143.295 86.4483 143.295H71.257V174.339H40.5438V63.7059H83.806ZM71.257 89.9604V117.041H84.7971C94.2092 117.041 100.814 113.243 100.814 103.666C100.814 94.9143 95.1998 89.9604 85.4577 89.9604H71.257Z" /><path fill="#31A8FF" d="M139.09 168.89L139.256 143.295C148.007 149.075 160.226 152.708 168.648 152.708C174.427 152.708 177.069 151.056 177.069 148.084C177.069 144.782 173.436 143.46 166.501 141.314C153.126 137.351 138.43 131.902 138.43 114.399C138.43 96.5654 153.126 86.6581 174.427 86.6581C184.5 86.6581 192.756 88.1442 200.021 91.2815L199.856 115.72C194.076 112.252 182.683 109.115 175.252 109.115C169.804 109.115 167.657 110.766 167.657 113.243C167.657 116.215 170.299 117.041 178.225 119.518C193.582 124.141 206.461 129.095 206.461 147.093C206.461 164.266 192.426 175.825 170.464 175.825C158.905 175.825 148.007 173.843 139.09 168.89Z" /></svg></span>Photoshop
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="toolSquare" viewBox="0 0 240 240"><path fill="#330000" d="M196.959 0H43.0414C19.2703 0 0 19.2703 0 43.0414V196.959C0 220.73 19.2703 240 43.0414 240H196.959C220.73 240 240 220.73 240 196.959V43.0414C240 19.2703 220.73 0 196.959 0Z" /><path fill="#FF9A00" d="M81.232 63.7059H116.568L156.198 174.339H123.833L118.384 157.496H76.9381L71.4894 174.339H40.4462L81.232 63.7059ZM109.798 131.241L97.7439 94.0885L85.6901 131.241H109.798Z" /><path fill="#FF9A00" d="M160.94 70.9713C160.94 63.0454 167.049 57.9267 176.296 57.9267C185.378 57.9267 191.157 63.2107 191.157 70.9713C191.157 78.8973 185.378 84.3465 176.296 84.3465C166.719 84.3465 160.94 79.0625 160.94 70.9713ZM161.765 88.1443H190.662V174.339H161.765V88.1443Z" /></svg></span>Illustrator
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="skillLabel" id="skillMotion">영상·모션</p>
+          <ul class="chips" aria-labelledby="skillMotion">
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="toolSquare" viewBox="0 0 240 240"><path fill="#00005B" d="M196.959 0H43.0414C19.2703 0 0 19.2703 0 43.0414V196.959C0 220.73 19.2703 240 43.0414 240H196.959C220.73 240 240 220.73 240 196.959V43.0414C240 19.2703 220.73 0 196.959 0Z" /><path fill="#9999FF" d="M92.5516 63.7059C123.925 63.7059 141.594 78.4019 141.594 103.005C141.594 131.737 117.65 143.296 95.1933 143.296H80.002V174.339H49.2894V63.7059H92.5516ZM80.002 89.9604V117.041H93.5427C102.955 117.041 109.559 113.243 109.559 103.666C109.559 94.9144 103.945 89.9604 94.2027 89.9604H80.002Z" /><path fill="#9999FF" d="M184.411 86.6581C191.181 86.6581 196.63 87.4837 199.107 88.3093V110.766C197.125 110.271 193.327 109.94 190.19 109.94C184.081 109.94 180.613 110.436 177.475 111.592V174.339H148.579V93.9235C158.981 89.3001 169.385 86.6581 184.411 86.6581Z" /></svg></span>Premiere Pro
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="toolSquare" viewBox="0 0 240 240"><path fill="#00005B" d="M196.959 0H43.0414C19.2703 0 0 19.2703 0 43.0414V196.959C0 220.73 19.2703 240 43.0414 240H196.959C220.73 240 240 220.73 240 196.959V43.0414C240 19.2703 220.73 0 196.959 0Z" /><path fill="#9999FF" d="M61.3389 63.7059H96.6754L136.305 174.339H103.941L98.4913 157.496H57.0455L51.5963 174.339H20.5531L61.3389 63.7059ZM89.9051 131.241L77.8513 94.0885L65.797 131.241H89.9051Z" /><path fill="#9999FF" d="M219.447 128.765C219.447 132.728 219.117 137.021 218.622 140.323H164.626C167.928 148.579 175.855 152.542 188.239 152.542C197.155 152.542 204.916 150.891 212.677 147.258L213.008 170.211C204.586 174.504 195.505 175.99 183.78 175.99C154.884 175.99 135.565 159.973 135.565 130.911C135.565 104.326 154.058 86.6581 178.496 86.6581C203.595 86.6581 219.447 102.84 219.447 128.765ZM163.636 121.499H192.532C191.872 113.738 187.083 108.289 178.662 108.289C170.571 108.289 165.451 112.582 163.636 121.499Z" /></svg></span>After Effects
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="skillLabel" id="skillBuild">구현</p>
+          <ul class="chips" aria-labelledby="skillBuild">
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg viewBox="0 0 512 512"><path fill="#E34F26" d="M71 460 30 0h451l-41 460-185 52z" /><path fill="#EF652A" d="M256 472l149-41 35-394H256z" /><path fill="#EBEBEB" d="M256 208h-75l-5-58h80V94H114l1 15 14 156h127zm0 147h-1l-63-17-4-45h-56l7 89 116 32h1z" /><path fill="#FFF" d="M255 208v57h70l-7 73-63 17v59l116-32 1-10 13-149 2-15h-16zm0-114v56h137l1-12 3-29 1-15z" /></svg></span>HTML
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg viewBox="0 0 512 512"><path fill="#1572B6" d="M71.357 460.819 30.272 0h451.456l-41.129 460.746L255.724 512z" /><path fill="#33A9DC" d="M256 472.812l149.284-41.386 35.123-393.46H256z" /><path fill="#FFF" d="M256 208.596h74.73l5.16-57.83H256V94.29h141.432l-1.354 15.152-13.88 155.637H256z" /><path fill="#EBEBEB" d="m256.34 355.31-.25.074-62.89-16.982-4.02-45.04h-56.69l7.912 88.67 115.68 32.11.26-.072z" /><path fill="#FFF" d="m325.927 262.73-6.8 75.635-62.986 17v58.753l115.77-32.085.848-9.54 9.823-109.763z" /><path fill="#EBEBEB" d="M256.195 94.29v56.476H119.79l-1.133-12.693-2.573-28.632-1.35-15.152zM256 208.6v56.475h-62.098l-1.132-12.69-2.575-28.633-1.35-15.152z" /></svg></span>CSS
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg viewBox="0 0 28 28"><path class="glowFill" d="M12 1 Q13.2 10.8 20 12 Q13.2 13.2 12 23 Q10.8 13.2 4 12 Q10.8 10.8 12 1 Z M21.5 16 Q22.1 20.9 25.5 21.5 Q22.1 22.1 21.5 27 Q20.9 22.1 17.5 21.5 Q20.9 20.9 21.5 16 Z" /></svg></span>AI 활용
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="skillLabel" id="skillTech">다뤄 본 기술</p>
+          <ul class="chips" aria-labelledby="skillTech">
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="glowLine" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" /><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" /></svg></span>블록체인
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="glowLine" viewBox="0 0 24 24"><path d="M12 7v4M8.6 15.6 11 13M15.4 15.6 13 13" /><circle cx="12" cy="4.5" r="2.5" /><circle cx="5.5" cy="18" r="2.5" /><circle cx="18.5" cy="18" r="2.5" /><circle cx="12" cy="12" r="1.5" /></svg></span>Web3
+            </li>
+            <li class="chip">
+              <span class="toolLogo" aria-hidden="true"><svg class="glowLine" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5" /><circle cx="8.5" cy="11" r="2" /><path d="M5.5 16c.6-1.4 1.6-2 3-2s2.4.6 3 2M14 10h4.5M14 14h3" /></svg></span>DID
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="third3">
-        <div>
-          <img src="img/air_1.png" alt="Air project artwork 1" loading="lazy" decoding="async">
-          <img src="img/air_2.png" alt="Air project artwork 2" loading="lazy" decoding="async">
-          <img src="img/air_3.png" alt="Air project artwork 3" loading="lazy" decoding="async">
-          <img src="img/air_4.png" alt="Air project artwork 4" loading="lazy" decoding="async">
-          <img src="img/air_5.png" alt="Air project artwork 5" loading="lazy" decoding="async">
-          <img src="img/air_m_1.png" alt="Air mobile artwork 1" loading="lazy" decoding="async">
-          <img src="img/air_m_2.png" alt="Air mobile artwork 2" loading="lazy" decoding="async">
-          <img src="img/air_m_3.png" alt="Air mobile artwork 3" loading="lazy" decoding="async">
-          <img src="img/air_m_4.png" alt="Air mobile artwork 4" loading="lazy" decoding="async">
-          <img src="img/air_1.png" alt="Air project artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_2.png" alt="Air project artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_3.png" alt="Air project artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_4.png" alt="Air project artwork 4 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_5.png" alt="Air project artwork 5 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_m_1.png" alt="Air mobile artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_m_2.png" alt="Air mobile artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_m_3.png" alt="Air mobile artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_m_4.png" alt="Air mobile artwork 4 duplicate" loading="lazy" decoding="async">
-          <img src="img/air_1.png" alt="Air project artwork 1 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_2.png" alt="Air project artwork 2 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_3.png" alt="Air project artwork 3 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_4.png" alt="Air project artwork 4 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_5.png" alt="Air project artwork 5 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_m_1.png" alt="Air mobile artwork 1 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_m_2.png" alt="Air mobile artwork 2 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_m_3.png" alt="Air mobile artwork 3 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/air_m_4.png" alt="Air mobile artwork 4 duplicate set 2" loading="lazy" decoding="async">
+    </section>
+
+    <!-- 5. 작업물: cards open their full case study in place, one at a time -->
+    <section class="turn" id="work" aria-labelledby="workQuestion">
+      <h2 class="question" id="workQuestion"><span class="bubble">어떤 일을 해 왔어요?</span></h2>
+      <div class="typingRow" aria-hidden="true"><div class="typing glow"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+      <div class="answer">
+
+        <div class="workGroup wide">
+          <h3 class="groupTitle">Experience</h3>
+          <p class="groupIntro">아이씨엔캐스트에서 담당한 자사 서비스 PRODAO의 실무 작업입니다.</p>
+          <div class="cards">
+            <div class="card" id="prodaoApp">
+                <img src="img/prodao_app_thumb.png" alt="실무 · 아이씨엔캐스트 | PRODAO 앱 — 지갑·채팅 앱 UX 설계"
+                  width="1200" height="700" loading="lazy" decoding="async">
+                <span class="cardFoot"><span>상세 내용 준비 중<!-- TODO: copy --></span></span>
+              </div>
+            <div class="card" id="prodaoWeb">
+                <img src="img/prodao_web_thumb.png" alt="실무 · 아이씨엔캐스트 | PRODAO 웹 — 공식 홈페이지 · 기술 문서"
+                  width="1200" height="700" loading="lazy" decoding="async">
+                <span class="cardFoot"><span>상세 내용 준비 중<!-- TODO: copy --></span></span>
+              </div>
+          </div>
+        </div>
+
+        <div class="workGroup wide">
+          <h3 class="groupTitle">Projects</h3>
+          <p class="groupIntro">개인 프로젝트 · 실제 브랜드와 무관한 가상 작업입니다.</p>
+          <div class="cards">
+
+            <button class="card glow" id="forit" type="button" aria-expanded="false" aria-controls="foritCase">
+                <img src="img/foritbanner.png" alt="포잇(For IT) 어플 디자인" width="1200" height="700" loading="lazy"
+                  decoding="async">
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="foritCase" hidden="until-found" role="region" aria-labelledby="foritTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">For It 어플 디자인</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="foritTitle">포잇(For IT) 어플 디자인</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                  <li>작업 기간 : 5일</li>
+                </ul>
+                <a class="caseLink"
+                  href="https://www.figma.com/design/OxsA1Tp5lgNxtaR4qwGU9Y/For-IT?node-id=0-1&amp;t=dRJuM4573BgXIore-1"
+                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                <img class="caseImage" src="img/forit_port.jpg" alt="포잇(For IT) 어플 디자인 상세" width="3200"
+                  height="5402" loading="lazy" decoding="async">
+                <div class="caseFoot">
+                  <a class="caseLink"
+                    href="https://www.figma.com/design/OxsA1Tp5lgNxtaR4qwGU9Y/For-IT?node-id=0-1&amp;t=dRJuM4573BgXIore-1"
+                    target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+
+            <button class="card glow" id="shortine" type="button" aria-expanded="false" aria-controls="shortineCase">
+                <img src="img/shortine_thumb.png" alt="쇼틴(Shortine) 어플 기획, 디자인" width="600" height="350"
+                  loading="lazy" decoding="async">
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="shortineCase" hidden="until-found" role="region" aria-labelledby="shortineTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">Shortine</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="shortineTitle">쇼틴(Shortine) 어플 기획, 디자인</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                </ul>
+                <a class="caseLink"
+                  href="https://www.figma.com/design/2CHcDSRz7yaPzyCDfoP8Bh/Shortine?node-id=0-1&amp;t=Od5Ycau62lDGLLWH-1"
+                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                <img class="caseImage" src="img/shortine_main.jpg" alt="쇼틴(Shortine) 어플 기획, 디자인 상세" width="1920"
+                  height="14046" loading="lazy" decoding="async">
+                <div class="caseFoot">
+                  <a class="caseLink"
+                    href="https://www.figma.com/design/2CHcDSRz7yaPzyCDfoP8Bh/Shortine?node-id=0-1&amp;t=Od5Ycau62lDGLLWH-1"
+                    target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+
+            <button class="card glow" id="doeat" type="button" aria-expanded="false" aria-controls="doeatCase">
+                <img src="img/doeatbanner.png" alt="두잇(DoEat) 배달 어플 리디자인" width="1200" height="700" loading="lazy"
+                  decoding="async">
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="doeatCase" hidden="until-found" role="region" aria-labelledby="doeatTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">두잇 (Do Eat) 리디자인</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="doeatTitle">두잇 리디자인 (배달 어플)</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                  <li>작업 기간 : 25일</li>
+                </ul>
+                <a class="caseLink"
+                  href="https://www.figma.com/design/IlhevBDOadIrLI9UG1JYou/%EB%91%90%EC%9E%87-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&amp;t=hpY87DVXW6NFB5jF-1"
+                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                <img class="caseImage" src="img/doeat_port.png" alt="두잇 리디자인 상세" width="1920" height="27331"
+                  loading="lazy" decoding="async">
+                <div class="caseFoot">
+                  <a class="caseLink"
+                    href="https://www.figma.com/design/IlhevBDOadIrLI9UG1JYou/%EB%91%90%EC%9E%87-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&amp;t=hpY87DVXW6NFB5jF-1"
+                    target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+
+            <button class="card glow" id="made" type="button" aria-expanded="false" aria-controls="madeCase">
+                <img src="img/madebanner.png" alt="뉴발란스 MADE 라인 리디자인" width="1200" height="700" loading="lazy"
+                  decoding="async">
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="madeCase" hidden="until-found" role="region" aria-labelledby="madeTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">뉴발란스 - MADE 리디자인</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="madeTitle">뉴발란스 MADE라인 리디자인</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                  <li>작업 기간 : 30일</li>
+                </ul>
+                <a class="caseLink" href="https://shin-donggeun.github.io/MADE_redesigned./" target="_blank"
+                  rel="noopener">웹 구현 링크 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                <img class="caseImage" src="img/made_port.png" alt="뉴발란스 MADE라인 리디자인 상세" width="1600" height="17210"
+                  loading="lazy" decoding="async">
+                <div class="caseFoot">
+                  <a class="caseLink" href="https://shin-donggeun.github.io/MADE_redesigned./" target="_blank"
+                    rel="noopener">웹 구현 링크 열기<svg class="icon"><use href="#iconLink" /></svg></a>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+
+          </div>
+        </div>
+
+        <div class="workGroup wide">
+          <h3 class="groupTitle">Graphics</h3>
+          <div class="cards">
+            <button class="card glow" id="graphics" type="button" aria-expanded="false" aria-controls="graphicsCase">
+                <span class="srOnly">Graphics</span>
+                <span class="mosaic">
+                  <img src="img/socar_1.png" alt="" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_1.png" alt="" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/air_m_1.png" alt="" width="750" height="850" loading="lazy" decoding="async">
+                </span>
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="graphicsCase" hidden="until-found" role="region" aria-labelledby="graphicsTitle">
+                <div class="caseBar">
+                  <h4 class="caseTitle" id="graphicsTitle">Graphics</h4>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <div class="gallery three" role="group" aria-label="Socar artwork">
+                  <img src="img/socar_1.png" alt="Socar artwork 1" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/socar_2.png" alt="Socar artwork 2" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/socar_3.png" alt="Socar artwork 3" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/socar_4.png" alt="Socar artwork 4" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/socar_5.png" alt="Socar artwork 5" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/socar_6.png" alt="Socar artwork 6" width="540" height="540" loading="lazy" decoding="async">
+                </div>
+                <div class="gallery five" role="group" aria-label="New Balance artwork">
+                  <img src="img/nb_1.png" alt="New Balance artwork 1" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_2.png" alt="New Balance artwork 2" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_3.png" alt="New Balance artwork 3" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_4.png" alt="New Balance artwork 4" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_5.png" alt="New Balance artwork 5" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_6.png" alt="New Balance artwork 6" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_7.png" alt="New Balance artwork 7" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_8.png" alt="New Balance artwork 8" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_9.png" alt="New Balance artwork 9" width="540" height="540" loading="lazy" decoding="async">
+                  <img src="img/nb_10.png" alt="New Balance artwork 10" width="540" height="540" loading="lazy" decoding="async">
+                </div>
+                <div class="gallery banners" role="group" aria-label="Air project artwork">
+                  <img src="img/air_1.png" alt="Air project artwork 1" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/air_2.png" alt="Air project artwork 2" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/air_3.png" alt="Air project artwork 3" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/air_4.png" alt="Air project artwork 4" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/air_5.png" alt="Air project artwork 5" width="1440" height="430" loading="lazy" decoding="async">
+                </div>
+                <div class="gallery four" role="group" aria-label="Air mobile artwork">
+                  <img src="img/air_m_1.png" alt="Air mobile artwork 1" width="750" height="850" loading="lazy" decoding="async">
+                  <img src="img/air_m_2.png" alt="Air mobile artwork 2" width="750" height="850" loading="lazy" decoding="async">
+                  <img src="img/air_m_3.png" alt="Air mobile artwork 3" width="750" height="850" loading="lazy" decoding="async">
+                  <img src="img/air_m_4.png" alt="Air mobile artwork 4" width="750" height="850" loading="lazy" decoding="async">
+                </div>
+                <div class="gallery banners" role="group" aria-label="Adidas · Protein artwork">
+                  <img src="img/adidas_1.png" alt="Adidas artwork 1" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/adidas_2.png" alt="Adidas artwork 2" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/adidas_3.png" alt="Adidas artwork 3" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/adidas_4.png" alt="Adidas artwork 4" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/protein_1.png" alt="Protein artwork 1" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/protein_2.png" alt="Protein artwork 2" width="1440" height="430" loading="lazy" decoding="async">
+                  <img src="img/protein_3.png" alt="Protein artwork 3" width="1440" height="430" loading="lazy" decoding="async">
+                </div>
+                <div class="videos">
+                  <video src="img/genesis.mp4" muted loop playsinline preload="none"></video>
+                  <video src="img/phone.mp4" muted loop playsinline preload="none"></video>
+                  <video src="img/SMF.mp4" muted loop playsinline preload="none"></video>
+                  <video src="img/repeat.mp4" muted loop playsinline preload="none"></video>
+                </div>
+                <div class="caseFoot">
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. 연락처 -->
+    <section class="turn" id="contact" aria-labelledby="contactQuestion">
+      <h2 class="question" id="contactQuestion"><span class="bubble">연락은 어디로 하면 돼요?</span></h2>
+      <div class="typingRow" aria-hidden="true"><div class="typing glow"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>
+      <div class="answer">
+        <p>소중한 연락을 기다리겠습니다.</p>
+        <ul class="contactList">
+          <li><svg class="icon" aria-hidden="true"><use href="#iconPhone" /></svg><span>Mobile : <a href="tel:01037963480">010-3796-3480</a></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#iconMail" /></svg><span>E-Mail : <button class="copyButton" id="mailCopy" type="button" data-copy="sdg1021@naver.com">sdg1021@naver.com<span class="srOnly"> 복사하기<!-- TODO: copy --></span></button> <span class="copyNote" id="mailCopyNote" role="status"></span></span></li>
+          <li><svg class="icon" aria-hidden="true"><use href="#iconPin" /></svg><span>Address : Seoul, South Korea</span></li>
+        </ul>
+        <p>감사합니다.</p>
+      </div>
+    </section>
+
+    <!-- Closing: the chat input again, only its look: the copyright where the
+         message would go, the note on the projects under it; its send button
+         goes back to the top. -->
+    <footer class="closing">
+      <div class="composer">
+        <p class="composerText">Copyright 2026. Shin DongGeun. All rights reserved.</p>
+        <div class="composerFoot">
+          <p class="modelLabel">Projects 섹션의 개인 프로젝트에 포함된 브랜드 및 기업 관련 작업은 실제 업체와 무관한 가상 작업물입니다.</p>
+          <a class="sendButton" href="#top">
+            <svg class="icon"><use href="#iconSend" /></svg>
+            <span class="tip">맨 위로 가기</span>
+          </a>
         </div>
       </div>
-      <div class="third4">
-        <div>
-          <img src="img/adidas_1.png" alt="Adidas artwork 1" loading="lazy" decoding="async">
-          <img src="img/adidas_2.png" alt="Adidas artwork 2" loading="lazy" decoding="async">
-          <img src="img/adidas_3.png" alt="Adidas artwork 3" loading="lazy" decoding="async">
-          <img src="img/adidas_4.png" alt="Adidas artwork 4" loading="lazy" decoding="async">
-          <img src="img/protein_1.png" alt="Protein artwork 1" loading="lazy" decoding="async">
-          <img src="img/protein_2.png" alt="Protein artwork 2" loading="lazy" decoding="async">
-          <img src="img/protein_3.png" alt="Protein artwork 3" loading="lazy" decoding="async">
-          <img src="img/adidas_1.png" alt="Adidas artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/adidas_2.png" alt="Adidas artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/adidas_3.png" alt="Adidas artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/adidas_4.png" alt="Adidas artwork 4 duplicate" loading="lazy" decoding="async">
-          <img src="img/protein_1.png" alt="Protein artwork 1 duplicate" loading="lazy" decoding="async">
-          <img src="img/protein_2.png" alt="Protein artwork 2 duplicate" loading="lazy" decoding="async">
-          <img src="img/protein_3.png" alt="Protein artwork 3 duplicate" loading="lazy" decoding="async">
-          <img src="img/adidas_1.png" alt="Adidas artwork 1 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/adidas_2.png" alt="Adidas artwork 2 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/adidas_3.png" alt="Adidas artwork 3 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/adidas_4.png" alt="Adidas artwork 4 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/protein_1.png" alt="Protein artwork 1 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/protein_2.png" alt="Protein artwork 2 duplicate set 2" loading="lazy" decoding="async">
-          <img src="img/protein_3.png" alt="Protein artwork 3 duplicate set 2" loading="lazy" decoding="async">
-        </div>
-      </div>
-      <div class="videos">
-        <div>
-          <video src="img/genesis.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          <video src="img/phone.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          <video src="img/SMF.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          <video src="img/repeat.mp4" autoplay muted loop playsinline preload="metadata"></video>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <section class="fourth reveal" id="fourth">
-    <div class="titleboxoutline reveal">
-      <div class="titlebox reveal">
-        <p class="title">Contact</p>
-      </div>
-    </div>
-
-    <div class="contactwrap">
-      <p class="contacttext1">소중한 연락을 기다리겠습니다.</p>
-      <div class="contactbox">
-        <p class="contacttext2">Mobile : 010-3796-3480</p>
-        <p class="contacttext2">E-Mail : sdg1021@naver.com</p>
-        <p class="contacttext2">Address : Seoul, South Korea</p>
-      </div>
-
-      <div class="footerbottom">
-        <p class="contactthanks">감사합니다.</p>
-        <p class="contacttext3">Copyright 2025. Shin DongGeun. All rights reserved.</p>
-        <p class="portfolio-disclaimer">본 포트폴리오에 포함된 모든 브랜드 및 기업 관련 프로젝트는 실제 업체와 무관한 개인 학습 및 포트폴리오 제작을 위한 가상의 작업물입니다.</p>
-      </div>
-    </div>
-  </section>
-
-  <script src="common.js"></script>
-  <script src="index.js"></script>
+  </main>
 </body>
 
 </html>
