@@ -9,8 +9,20 @@
 const calmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 const calm = () => calmQuery.matches;
 
-// Old anchors (index.html#second, ...) and the old detail pages' targets.
-const oldAnchors = { first: 'top', second: 'work', third: 'graphics', fourth: 'contact', experience: 'prodaoApp' };
+// Coming back to the page (typing its address again, reloading) starts at
+// the top, not where the browser last left off.
+history.scrollRestoration = 'manual';
+
+// The old site's section anchors (index.html#second, ...): browsers offer
+// them back from history when the address is typed, so they lead to the top.
+const oldAnchors = new Set(['first', 'second', 'third', 'fourth', 'experience']);
+
+// The address stays plain: a link with a hash (a project, a section) is
+// followed once, then the hash is cleared, so the browser never offers the
+// address back with one.
+const clearHash = () => {
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+};
 
 const hero = document.querySelector('.hero');
 const heroBox = document.getElementById('heroComposer');
@@ -439,7 +451,6 @@ function openCase(card, { scroll = true } = {}) {
   cards.forEach((other) => { if (other !== card) closeCase(other, { scroll: false }); });
   caseOf(card).removeAttribute('hidden');
   card.setAttribute('aria-expanded', 'true');
-  history.replaceState(null, '', `#${card.id}`);
   if (scroll) scrollToY(topOf(card));
 }
 
@@ -448,7 +459,6 @@ function closeCase(card, { scroll = true } = {}) {
   // until-found: the browser's find in page still finds (and opens) it.
   caseOf(card).setAttribute('hidden', 'until-found');
   card.setAttribute('aria-expanded', 'false');
-  if (location.hash === `#${card.id}`) history.replaceState(null, '', '#work');
   // Folding from the bottom of a long case: bring its card back into view.
   if (scroll && card.getBoundingClientRect().top < 0) {
     scrollToY(topOf(card));
@@ -497,14 +507,11 @@ videos.forEach((video) => {
 
 /* Going to a hash: everything up to it shows at once; a project opens. */
 
-function goTo(hash, { smooth = true, push = true, landing = false } = {}) {
+function goTo(hash, { smooth = true, landing = false } = {}) {
   let id = decodeURIComponent(hash.replace(/^#/, ''));
+  clearHash();
   if (!id) return;
-  if (oldAnchors[id]) {
-    id = oldAnchors[id];
-    push = false;
-    history.replaceState(null, '', `#${id}`);
-  }
+  if (oldAnchors.has(id)) id = 'top';
   const target = document.getElementById(id);
   if (!target) return;
   if (id === 'top') {
@@ -520,7 +527,6 @@ function goTo(hash, { smooth = true, push = true, landing = false } = {}) {
     if (cards.includes(target)) openCase(target, { scroll: false });
     scrollToY(topOf(target), { smooth });
   }
-  if (push) history.pushState(null, '', `#${id}`);
   // Opening the page on a hash: the browser already starts keyboard
   // navigation there; no focus ring before any input (it would also focus
   // a card by itself).
@@ -544,11 +550,11 @@ document.addEventListener('click', (event) => {
   goTo(link.getAttribute('href'));
 });
 
-window.addEventListener('hashchange', () => goTo(location.hash, { push: false }));
+window.addEventListener('hashchange', () => goTo(location.hash));
 
 if (location.hash) {
   // Wait one frame so the browser's own jump to the hash doesn't fight ours.
-  requestAnimationFrame(() => goTo(location.hash, { smooth: false, push: false, landing: true }));
+  requestAnimationFrame(() => goTo(location.hash, { smooth: false, landing: true }));
 }
 
 
