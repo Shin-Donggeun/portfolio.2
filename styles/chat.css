@@ -54,10 +54,12 @@
     scroll-snap-type: y mandatory;
   }
 
-  /* The top of the page is marked by an empty box, not by the hero: the
-     hero stays stuck to the top of the screen, so it would line up with
-     every scroll position and the page could never page back to the top. */
-  .chat::before {
+  /* The top and the end of the page are marked by empty boxes, not by the
+     hero and the closing box: those stay stuck to the screen (the hero at
+     the top, the chat input at the bottom), so they would line up with
+     every scroll position. */
+  .chat::before,
+  .chat::after {
     content: "";
     display: block;
   }
@@ -68,7 +70,7 @@
     scroll-snap-stop: always;
   }
 
-  .closing {
+  .chat::after {
     scroll-snap-align: end;
     scroll-margin-bottom: 24px; /* the page's bottom padding */
   }

@@ -13,8 +13,7 @@ const calm = () => calmQuery.matches;
 // the top, not where the browser last left off.
 history.scrollRestoration = 'manual';
 
-// The old site's section anchors (index.html#second, ...): browsers offer
-// them back from history when the address is typed, so they lead to the top.
+// The old site's section anchors (index.html#second, ...) lead to the top.
 const oldAnchors = new Set(['first', 'second', 'third', 'fourth', 'experience']);
 
 // The address stays plain: a link with a hash (a project, a section) is
@@ -552,9 +551,19 @@ document.addEventListener('click', (event) => {
 
 window.addEventListener('hashchange', () => goTo(location.hash));
 
+// Opening the page on a hash: a project's link (index.html#forit, the old
+// detail pages) opens that project. Any other hash, a section's or an old
+// anchor, is what browsers offer back from history when the address is
+// typed, so the page starts at the top.
 if (location.hash) {
-  // Wait one frame so the browser's own jump to the hash doesn't fight ours.
-  requestAnimationFrame(() => goTo(location.hash, { smooth: false, landing: true }));
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (cards.some((card) => card.id === id)) {
+    // Wait one frame so the browser's own jump to the hash doesn't fight ours.
+    requestAnimationFrame(() => goTo(location.hash, { smooth: false, landing: true }));
+  } else {
+    clearHash();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
 }
 
 
