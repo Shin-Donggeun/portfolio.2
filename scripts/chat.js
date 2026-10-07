@@ -484,7 +484,7 @@ document.querySelectorAll('[data-fold]').forEach((button) => {
 document.addEventListener('click', (event) => {
   const card = cards.find(isOpen);
   if (!card || event.defaultPrevented || !window.getSelection().isCollapsed) return;
-  if (event.target.closest('a, button, input, label, video, .case, .sidebar, .topBar, .scrim')) return;
+  if (event.target.closest('a, button, input, label, video, .case, .closing, .sidebar, .topBar, .scrim')) return;
   const onScreen = card.getBoundingClientRect().top < window.innerHeight
     && caseOf(card).getBoundingClientRect().bottom > 0;
   if (onScreen) closeCase(card);
@@ -650,13 +650,22 @@ phone.addEventListener('change', () => {
 sidebar.inert = phone.matches;
 
 
-/* Closing: the last turn and the closing box share the last screen; the CSS
-   sizes the turn from the box's height. */
+/* Closing: the last turn and the closing box share the last screen, and the
+   box floats at the bottom like a chat input; the CSS sizes the last turn
+   from the box's height, and every turn's bottom room from the floating
+   input's (with its 24px gap). */
 
 const closing = document.querySelector('.closing');
-new ResizeObserver(() => {
+const dock = closing.querySelector('.composer');
+
+// Set at once too, so a page opened on a link already has its final layout.
+function fitDock() {
   root.style.setProperty('--closing-height', `${closing.offsetHeight}px`);
-}).observe(closing);
+  root.style.setProperty('--dock-height', `${dock.offsetHeight + 24}px`);
+}
+
+fitDock();
+new ResizeObserver(fitDock).observe(closing);
 
 
 /* Contact: the e-mail address copies itself, with a short note after it. */

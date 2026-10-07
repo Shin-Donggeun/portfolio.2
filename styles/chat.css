@@ -339,12 +339,14 @@
 
 /* A turn: the visitor's question, then the answer */
 
-/* One turn per screen, with room around it. The last (contact) runs on into
-   the closing input. */
+/* One turn per screen, with room around it; at the bottom, room for the
+   floating chat input too (--dock-height, from scripts/chat.js: the box and
+   its gap), so it never covers the end of an answer. The last (contact)
+   runs on into the closing input. */
 .turn {
   min-height: 100vh;
   min-height: 100svh;
-  padding-block: 16vh 10vh;
+  padding-block: 16vh max(10vh, calc(var(--dock-height, 0px) + 8px));
 }
 
 /* The last turn (contact) shares the last screen with the closing box:
@@ -354,6 +356,7 @@
 .turn:last-of-type {
   min-height: calc(100vh - var(--closing-height, 0px) - 24px);
   min-height: calc(100svh - var(--closing-height, 0px) - 24px);
+  padding-bottom: 10vh;
 }
 
 .question {
@@ -374,11 +377,35 @@
   line-height: 1.6;
 }
 
+/* Who answers, like a chat app: the profile picture and name over the
+   assistant's side (the photo's background is see-through, so the circle
+   has its own). */
+.speaker {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--surface);
+}
+
 /* The typing indicator; its row takes the entrance animation, so the bubble
-   itself never becomes its own layer (its glow sits behind it). */
+   itself never becomes its own layer (its glow sits behind it). The row
+   takes no height: the dots sit where the answer will appear, so the turn
+   does not grow while they show, nor the answer move when they go. */
 .typingRow {
   display: none;
-  margin-top: 24px;
+  height: 0;
+  margin-top: 10px;
 }
 
 .typing {
@@ -416,7 +443,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 14px;
 }
 
 .facts {
@@ -432,7 +459,8 @@
    piece (.done; each piece is a .unit with its place in line, --i). Turns
    already passed show at once (.instant). All content is in the page from
    the start; this only stages it. */
-.bubble {
+.bubble,
+.speaker {
   transition: opacity .6s var(--ease), transform .7s var(--ease);
 }
 
@@ -441,7 +469,7 @@
   transition-delay: calc(var(--i, 0) * 110ms);
 }
 
-.turn.instant :is(.bubble, .unit) {
+.turn.instant :is(.bubble, .speaker, .unit) {
   transition: none;
 }
 
@@ -449,6 +477,12 @@
   .js .turn:not(.asked, .done) .bubble {
     opacity: 0;
     transform: translateY(28px);
+  }
+
+  /* The name and picture come in with the typing dots. */
+  .js .turn:not(.thinking, .done) .speaker {
+    opacity: 0;
+    transform: translateY(16px);
   }
 
   /* Before the script has marked the pieces, the whole answer waits. */
@@ -957,8 +991,42 @@ button.card[aria-expanded="true"] {
   font-size: 14px;
 }
 
+/* The closing box floats where a chat app keeps its input: at the bottom of
+   the screen, over the conversation, from the first turn on (not over the
+   hero, which has its own); at the end of the page it rests in place (its
+   offset is the page's bottom padding, so it does not jump). The page colour
+   fades in behind it, across the conversation's width, so what scrolls
+   underneath does not show through. Only the box itself takes clicks. */
 .closing {
-  padding: 72px 0 32px;
+  position: sticky;
+  bottom: 24px;
+  z-index: 10;
+  padding-top: 72px;
+  pointer-events: none;
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+
+.closing::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 24px;
+  bottom: -24px;
+  left: 50%;
+  width: 100cqw;
+  transform: translateX(-50%);
+  background: linear-gradient(transparent, var(--bg) 45%);
+}
+
+.closing .composer {
+  pointer-events: auto;
+}
+
+.js .hero:not(.gone) ~ .closing {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease), visibility 0s linear .3s;
 }
 
 
@@ -1160,6 +1228,7 @@ button.card[aria-expanded="true"] {
 
 @media (prefers-reduced-motion: reduce) {
   .bubble,
+  .speaker,
   .unit,
   .card,
   .card.unit,
