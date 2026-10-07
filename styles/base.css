@@ -13,8 +13,8 @@
 
   --font: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --sidebar-width: 264px;
-  --column: 720px;          /* text column */
-  --wide: 1000px;           /* images and cards may grow to this */
+  --column: 1000px;         /* the conversation's column, every turn alike */
+  --input-column: 720px;    /* the hero and the chat input: narrower */
   --gutter: 20px;
   --radius: 18px;
   --radius-sharp: 4px;      /* the one sharp corner of bubbles and cards */

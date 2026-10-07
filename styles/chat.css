@@ -20,7 +20,7 @@
 .chat {
   margin-left: var(--sidebar-width);
   padding-bottom: 24px;
-  /* Lets wide media size themselves to the conversation area (cqw). */
+  /* Lets type and cards size themselves to the conversation area (cq units). */
   container-type: inline-size;
   /* Own stacking context, so the glow drawn behind an element (z-index -1)
      stays above the page background. */
@@ -36,6 +36,11 @@
 .closing {
   width: min(100% - 2 * var(--gutter), var(--column));
   margin-inline: auto;
+}
+
+.hero,
+.closing {
+  width: min(100% - 2 * var(--gutter), var(--input-column));
 }
 
 /* Paging: scrolling settles on one screen at a time, the top or a turn; a
@@ -67,13 +72,6 @@
     scroll-snap-align: end;
     scroll-margin-bottom: 24px; /* the page's bottom padding */
   }
-}
-
-/* Images and cards may extend wider than the text column. */
-.wide {
-  --w: min(var(--wide), 100cqw - 2 * var(--gutter));
-  width: var(--w);
-  margin-left: calc((100% - var(--w)) / 2);
 }
 
 .iconButton {
@@ -717,7 +715,7 @@
   margin-top: 16px;
   /* A card's width: half the group's (one card across on phones). Its
      corners are worked out from it. */
-  --card-width: calc((min(var(--wide), 100cqw - 2 * var(--gutter)) - 16px) / 2);
+  --card-width: calc((min(var(--column), 100cqw - 2 * var(--gutter)) - 16px) / 2);
 }
 
 /* The banner pictures come with their own rounded corners, drawn into the
@@ -1213,7 +1211,7 @@ button.card[aria-expanded="true"] {
   }
 
   .cards {
-    --card-width: min(var(--wide), 100cqw - 2 * var(--gutter));
+    --card-width: min(var(--column), 100cqw - 2 * var(--gutter));
   }
 
   .case:not([hidden]) {
