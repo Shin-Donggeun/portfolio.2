@@ -228,10 +228,67 @@
                   width="1200" height="700" loading="lazy" decoding="async">
                 <span class="cardFoot"><span>상세 내용 준비 중<!-- TODO: copy --></span></span>
               </div>
-            <div class="card" id="prodaoWeb">
+            <button class="card glow" id="prodaoWeb" type="button" aria-expanded="false" aria-controls="prodaoWebCase">
                 <img src="img/prodao_web_thumb.png" alt="실무 · 아이씨엔캐스트 | PRODAO 웹 — 공식 홈페이지 · 기술 문서"
                   width="1200" height="700" loading="lazy" decoding="async">
-                <span class="cardFoot"><span>상세 내용 준비 중<!-- TODO: copy --></span></span>
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="prodaoWebCase" hidden="until-found" role="region" aria-labelledby="prodaoWebTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">실무 · 아이씨엔캐스트</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="prodaoWebTitle">PRODAO 웹 — 공식 홈페이지 · 기술 문서</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                  <li>재직 기간 : 2025.11 – 2026.07</li>
+                </ul>
+                <a class="caseLink" href="https://www.prodao.org" target="_blank"
+                  rel="noopener">공식 홈페이지 열기<!-- TODO: copy --><svg class="icon"><use href="#iconLink" /></svg></a>
+                <!-- TODO: summary — 한 줄 요약 -->
+                <!-- TODO: decisions — 핵심 디자인 결정 1–2개 -->
+                <dl class="caseInfo">
+                  <div><dt>역할</dt><dd>디자인 · AI 활용 구현</dd></div>
+                  <div><dt>범위</dt><dd>공식 홈페이지 리뉴얼 · 기술 문서 사이트</dd></div>
+                </dl>
+                <!-- TODO: images — 작업 화면 캡처 -->
+                <div class="caseFoot">
+                  <a class="caseLink" href="https://www.prodao.org" target="_blank"
+                    rel="noopener">공식 홈페이지 열기<!-- TODO: copy --><svg class="icon"><use href="#iconLink" /></svg></a>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+              </div>
+            <button class="card glow" id="prodaoDid" type="button" aria-expanded="false" aria-controls="prodaoDidCase">
+                <img src="img/prodao_did_thumb.png" alt="실무 · 아이씨엔캐스트 · 미출시 | PRODAO DID — 증명하고 확인하고 발급한다. My Data의 시작"
+                  width="1200" height="700" loading="lazy" decoding="async">
+                <span class="cardFoot" aria-hidden="true"><span class="whenClosed">펼쳐 보기<!-- TODO: copy --></span><span class="whenOpen">접기<!-- TODO: copy --></span><svg class="icon"><use href="#iconOpen" /></svg></span>
+              </button>
+              <div class="case" id="prodaoDidCase" hidden="until-found" role="region" aria-labelledby="prodaoDidTitle">
+                <div class="caseBar">
+                  <p class="caseKicker">실무 · 아이씨엔캐스트 · 미출시</p>
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
+                <h4 class="caseTitle" id="prodaoDidTitle">PRODAO DID — 증명하고 확인하고 발급한다. My Data의 시작</h4>
+                <ul class="caseMeta">
+                  <li>신동근</li>
+                  <li>작업 기간 : 2025.11 – 2026.04</li>
+                </ul>
+                <dl class="caseInfo">
+                  <div><dt>배경</dt><dd>별도 앱이던 DID 서비스를 지갑 앱의 핵심 기능으로 통합하는 리뉴얼</dd></div>
+                  <div><dt>무엇을</dt><dd>신분증·출입증 같은 내 증명을 지갑에 담아 QR로 제시하고, 진위는 블록체인으로 확인. 누구나 확인하는 사람·발급하는 사람이 될 수 있음</dd></div>
+                  <div><dt>사용 장면</dt><dd>사원증·출입증·협회 회원증부터 모임 초대장까지 (예: 경기 티켓, 박람회 입장권, 주차장 출입권, 연말 모임 티켓)</dd></div>
+                  <div><dt>대상</dt><dd>40~50대. 대상이 넓을수록 '어디에 쓰는가'가 흐려져 핵심 사용자를 좁힘. 첫 설정은 AI가 대화로 안내</dd></div>
+                  <div><dt>핵심 판단</dt><dd>누구나 발급·보유·확인을 오갈 수 있어야 한다는 DID 원칙에 맞춰 역할 전환을 단순화. 확인은 QR 스캔 버튼 하나로 바로 열리게 하고, 발급과 보유는 모임장·회원처럼 짝을 이루는 관계라 같은 계층의 탭으로 배치</dd></div>
+                  <div><dt>역할</dt><dd>기획 · UI/UX 디자인</dd></div>
+                  <div><dt>상태</dt><dd>디자인 완료 후 개발 중 보류 · 핵심 기능(지갑·채팅) 우선 출시로 범위 조정</dd></div>
+                </dl>
+                <!-- TODO: screens (mockups rebuilt with dummy data) — 내 증명 탭 -->
+                <!-- TODO: screens — 발급 흐름 -->
+                <!-- TODO: screens — QR 확인 결과 -->
+                <!-- TODO: screens — AI 첫 설정 안내 -->
+                <div class="caseFoot">
+                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
+                </div>
               </div>
           </div>
         </div>

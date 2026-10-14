@@ -832,6 +832,11 @@ button.card[aria-expanded="true"] {
   margin-top: 24px;
 }
 
+/* A foot with no link: its fold button still sits on the right. */
+.caseFoot > .foldButton:only-child {
+  margin-left: auto;
+}
+
 .caseKicker {
   color: var(--text-muted);
   font-size: 14px;
@@ -888,6 +893,27 @@ button.card[aria-expanded="true"] {
   width: calc(100% + 48px);
   max-width: none;
   margin: 24px -24px 0;
+}
+
+/* A case's facts (role, scope) where a long picture would go: label and
+   value side by side, in the meta line's type, on the page colour. */
+.caseInfo {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 24px;
+  margin-top: 24px;
+  padding: var(--gutter);
+  border-radius: var(--radius);
+  background-color: var(--bg);
+  font-size: 15px;
+}
+
+.caseInfo div {
+  display: contents;
+}
+
+.caseInfo dt {
+  color: var(--text-muted);
 }
 
 /* Graphics: every piece in view at once, no sideways scrolling. Each set is
