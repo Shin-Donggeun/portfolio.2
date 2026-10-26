@@ -33,9 +33,10 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* No background of its own: the page colour is html's, and the ambient
+   light behind the content (styles/chat.css) shows through. */
 body {
   margin: 0;
-  background-color: var(--bg);
   color: var(--text);
   font-family: var(--font);
   font-size: 16px;
@@ -155,6 +156,7 @@ button {
     transition: none !important;
     animation: none !important;
   }
+  .ambient,
   .topBar,
   .sidebar,
   .scrim,

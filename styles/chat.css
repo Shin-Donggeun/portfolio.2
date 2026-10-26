@@ -1,5 +1,73 @@
 /* The chat app: conversation list on the left, the conversation in the middle. */
 
+/* Ambient light: a few very faint, very soft blue and violet circles that
+   drift slowly behind everything, fixed to the screen (scrolling does not
+   move them), so a still screen never feels quite static. Barely there on
+   purpose: seen only when looked for. A fine grain over them keeps their
+   soft edges from showing steps. Still with reduced motion. */
+.ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Three circles in an inverted triangle: two up top (blue on the left,
+   violet on the right) and one below in the middle (between the two); each
+   wanders a little around its place (--x, --y: its centre on the screen). */
+.ambient span {
+  position: absolute;
+  top: calc(var(--y) - var(--size) / 2);
+  left: calc(var(--x) - var(--size) / 2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--c), transparent);
+  animation: drift var(--time) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.ambient span:nth-child(1) {
+  --size: 56vmax;
+  --x: 20%;
+  --y: 16%;
+  --c: rgb(79 124 255 / .15);
+  --time: 47s;
+  --to: translate(9vmax, 7vmax) scale(1.08);
+}
+
+.ambient span:nth-child(2) {
+  --size: 52vmax;
+  --x: 82%;
+  --y: 20%;
+  --c: rgb(139 92 246 / .14);
+  --time: 59s;
+  --to: translate(-8vmax, 8vmax) scale(.94);
+}
+
+.ambient span:nth-child(3) {
+  --size: 54vmax;
+  --x: 52%;
+  --y: 88%;
+  --c: rgb(109 108 250 / .14);
+  --time: 53s;
+  --to: translate(7vmax, -9vmax) scale(1.07);
+}
+
+.ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .035;
+}
+
+@keyframes drift {
+  to { transform: var(--to); }
+}
+
+
 /* Layout */
 
 .topBar {
@@ -1267,7 +1335,8 @@ button.card[aria-expanded="true"] {
   .glowBead,
   .typing .dot,
   .typingRow,
-  .caret {
+  .caret,
+  .ambient span {
     animation: none !important;
   }
 }

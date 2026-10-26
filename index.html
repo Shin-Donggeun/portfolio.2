@@ -22,6 +22,9 @@
 </head>
 
 <body>
+  <!-- Ambient light: faint circles drifting behind everything (styles/chat.css) -->
+  <div class="ambient" aria-hidden="true"><span></span><span></span><span></span></div>
+
   <!-- Icons (Lucide, ISC license) -->
   <svg class="iconSprite" aria-hidden="true">
     <symbol id="iconMenu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></symbol>
@@ -236,15 +239,12 @@
               <div class="case" id="prodaoWebCase" hidden="until-found" role="region" aria-labelledby="prodaoWebTitle">
                 <div class="caseBar">
                   <p class="caseKicker">실무 · 아이씨엔캐스트</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="prodaoWebTitle">PRODAO 웹 — 공식 홈페이지 · 기술 문서</h4>
                 <ul class="caseMeta">
                   <li>신동근</li>
                   <li>재직 기간 : 2025.11 – 2026.07</li>
                 </ul>
-                <a class="caseLink" href="https://www.prodao.org" target="_blank"
-                  rel="noopener">공식 홈페이지 열기<!-- TODO: copy --><svg class="icon"><use href="#iconLink" /></svg></a>
                 <!-- TODO: summary — 한 줄 요약 -->
                 <!-- TODO: decisions — 핵심 디자인 결정 1–2개 -->
                 <dl class="caseInfo">
@@ -266,7 +266,6 @@
               <div class="case" id="prodaoDidCase" hidden="until-found" role="region" aria-labelledby="prodaoDidTitle">
                 <div class="caseBar">
                   <p class="caseKicker">실무 · 아이씨엔캐스트 · 미출시</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="prodaoDidTitle">PRODAO DID — 증명하고 확인하고 발급한다. My Data의 시작</h4>
                 <ul class="caseMeta">
@@ -274,11 +273,11 @@
                   <li>작업 기간 : 2025.11 – 2026.04</li>
                 </ul>
                 <dl class="caseInfo">
-                  <div><dt>배경</dt><dd>별도 앱이던 DID 서비스를 지갑 앱의 핵심 기능으로 통합하는 리뉴얼</dd></div>
+                  <div><dt>배경</dt><dd>블록체인과 Web3 철학에 맞춰 My Data로 확장하는 기초 단계</dd></div>
                   <div><dt>무엇을</dt><dd>신분증·출입증 같은 내 증명을 지갑에 담아 QR로 제시하고, 진위는 블록체인으로 확인. 누구나 확인하는 사람·발급하는 사람이 될 수 있음</dd></div>
                   <div><dt>사용 장면</dt><dd>사원증·출입증·협회 회원증부터 모임 초대장까지 (예: 경기 티켓, 박람회 입장권, 주차장 출입권, 연말 모임 티켓)</dd></div>
                   <div><dt>대상</dt><dd>40~50대. 대상이 넓을수록 '어디에 쓰는가'가 흐려져 핵심 사용자를 좁힘. 첫 설정은 AI가 대화로 안내</dd></div>
-                  <div><dt>핵심 판단</dt><dd>누구나 발급·보유·확인을 오갈 수 있어야 한다는 DID 원칙에 맞춰 역할 전환을 단순화. 확인은 QR 스캔 버튼 하나로 바로 열리게 하고, 발급과 보유는 모임장·회원처럼 짝을 이루는 관계라 같은 계층의 탭으로 배치</dd></div>
+                  <div><dt>핵심 판단</dt><dd>누구나 발급·보유·확인을 오갈 수 있어야 한다는 Web3 원칙에 맞춰 역할 전환을 단순화. 익숙하지 않은 Web3 서비스를 누구나 쉽게 이해할 수 있도록 UI를 단순화</dd></div>
                   <div><dt>역할</dt><dd>기획 · UI/UX 디자인</dd></div>
                   <div><dt>상태</dt><dd>디자인 완료 후 개발 중 보류 · 핵심 기능(지갑·채팅) 우선 출시로 범위 조정</dd></div>
                 </dl>
@@ -306,16 +305,12 @@
               <div class="case" id="foritCase" hidden="until-found" role="region" aria-labelledby="foritTitle">
                 <div class="caseBar">
                   <p class="caseKicker">For It 어플 디자인</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="foritTitle">포잇(For IT) 어플 디자인</h4>
                 <ul class="caseMeta">
                   <li>신동근</li>
                   <li>작업 기간 : 5일</li>
                 </ul>
-                <a class="caseLink"
-                  href="https://www.figma.com/design/OxsA1Tp5lgNxtaR4qwGU9Y/For-IT?node-id=0-1&amp;t=dRJuM4573BgXIore-1"
-                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
                 <img class="caseImage" src="img/forit_port.jpg" alt="포잇(For IT) 어플 디자인 상세" width="3200"
                   height="5402" loading="lazy" decoding="async">
                 <div class="caseFoot">
@@ -334,15 +329,11 @@
               <div class="case" id="shortineCase" hidden="until-found" role="region" aria-labelledby="shortineTitle">
                 <div class="caseBar">
                   <p class="caseKicker">Shortine</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="shortineTitle">쇼틴(Shortine) 어플 기획, 디자인</h4>
                 <ul class="caseMeta">
                   <li>신동근</li>
                 </ul>
-                <a class="caseLink"
-                  href="https://www.figma.com/design/2CHcDSRz7yaPzyCDfoP8Bh/Shortine?node-id=0-1&amp;t=Od5Ycau62lDGLLWH-1"
-                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
                 <img class="caseImage" src="img/shortine_main.jpg" alt="쇼틴(Shortine) 어플 기획, 디자인 상세" width="1920"
                   height="14046" loading="lazy" decoding="async">
                 <div class="caseFoot">
@@ -361,16 +352,12 @@
               <div class="case" id="doeatCase" hidden="until-found" role="region" aria-labelledby="doeatTitle">
                 <div class="caseBar">
                   <p class="caseKicker">두잇 (Do Eat) 리디자인</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="doeatTitle">두잇 리디자인 (배달 어플)</h4>
                 <ul class="caseMeta">
                   <li>신동근</li>
                   <li>작업 기간 : 25일</li>
                 </ul>
-                <a class="caseLink"
-                  href="https://www.figma.com/design/IlhevBDOadIrLI9UG1JYou/%EB%91%90%EC%9E%87-%EB%A6%AC%EB%94%94%EC%9E%90%EC%9D%B8?node-id=0-1&amp;t=hpY87DVXW6NFB5jF-1"
-                  target="_blank" rel="noopener">피그마 파일 열기<svg class="icon"><use href="#iconLink" /></svg></a>
                 <img class="caseImage" src="img/doeat_port.png" alt="두잇 리디자인 상세" width="1920" height="27331"
                   loading="lazy" decoding="async">
                 <div class="caseFoot">
@@ -389,15 +376,12 @@
               <div class="case" id="madeCase" hidden="until-found" role="region" aria-labelledby="madeTitle">
                 <div class="caseBar">
                   <p class="caseKicker">뉴발란스 - MADE 리디자인</p>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <h4 class="caseTitle" id="madeTitle">뉴발란스 MADE라인 리디자인</h4>
                 <ul class="caseMeta">
                   <li>신동근</li>
                   <li>작업 기간 : 30일</li>
                 </ul>
-                <a class="caseLink" href="https://shin-donggeun.github.io/MADE_redesigned./" target="_blank"
-                  rel="noopener">웹 구현 링크 열기<svg class="icon"><use href="#iconLink" /></svg></a>
                 <img class="caseImage" src="img/made_port.png" alt="뉴발란스 MADE라인 리디자인 상세" width="1600" height="17210"
                   loading="lazy" decoding="async">
                 <div class="caseFoot">
@@ -425,7 +409,6 @@
               <div class="case" id="graphicsCase" hidden="until-found" role="region" aria-labelledby="graphicsTitle">
                 <div class="caseBar">
                   <h4 class="caseTitle" id="graphicsTitle">Graphics</h4>
-                  <button class="foldButton" type="button" data-fold>접기<!-- TODO: copy --><svg class="icon"><use href="#iconFold" /></svg></button>
                 </div>
                 <div class="gallery three" role="group" aria-label="Socar artwork">
                   <img src="img/socar_1.png" alt="Socar artwork 1" width="540" height="540" loading="lazy" decoding="async">
